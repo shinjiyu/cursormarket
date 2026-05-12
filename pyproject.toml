@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cursor-agent-memory"
+version = "0.1.0"
+description = "Extract local Cursor sessions on Windows into agent-friendly JSON."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Cursor Agent" }
+]
+dependencies = []
+
+[project.scripts]
+cursor-agent-memory = "cursor_agent_memory.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cursor_agent_memory*"]
