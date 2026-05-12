@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero compact">
+  <div>
+    <h1>Upload raw bundle</h1>
+    <p>Publish a raw bundle into the internal catalog with metadata and plugin checks.</p>
+  </div>
+</section>
+
+<section class="grid two">
+  <article class="card">
+    <h2>Publish</h2>
+    {% if errors %}
+    <div class="alert error">
+      {% for error in errors %}
+      <div>{{ error }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <form method="post" action="/upload" enctype="multipart/form-data" class="stack">
+      <label>
+        <span>Bundle file</span>
+        <input type="file" name="bundle_file" required />
+      </label>
+      <label>
+        <span>Title</span>
+        <input type="text" name="title" value="{{ form_data.title or '' }}" />
+      </label>
+      <div class="grid two">
+        <label>
+          <span>Project</span>
+          <input type="text" name="project" value="{{ form_data.project or '' }}" />
+        </label>
+        <label>
+          <span>Repo</span>
+          <input type="text" name="repo" value="{{ form_data.repo or '' }}" />
+        </label>
+      </div>
+      <div class="grid two">
+        <label>
+          <span>Problem Type</span>
+          <input type="text" name="problem_type" value="{{ form_data.problem_type or 'analysis' }}" />
+        </label>
+        <label>
+          <span>Sensitivity</span>
+          <select name="sensitivity">
+            {% for item in ["internal", "restricted"] %}
+            <option value="{{ item }}" {% if form_data.sensitivity == item %}selected{% endif %}>{{ item }}</option>
+            {% endfor %}
+          </select>
+        </label>
+      </div>
+      <label>
+        <span>Tags</span>
+        <input type="text" name="tags" value="{{ form_data.tags or '' }}" placeholder="comma,separated,tags" />
+      </label>
+      <label>
+        <span>Short note</span>
+        <textarea name="short_note" rows="4">{{ form_data.short_note or '' }}</textarea>
+      </label>
+      <button class="button primary" type="submit">Upload bundle</button>
+    </form>
+  </article>
+
+  <article class="card">
+    <h2>What happens</h2>
+    <ol class="steps">
+      <li>Store raw file as immutable bundle version</li>
+      <li>Extract manifest and safe preview when possible</li>
+      <li>Run before-upload plugins like sensitivity scan</li>
+      <li>Publish to catalog if checks pass</li>
+    </ol>
+  </article>
+</section>
+
+{% if result %}
+<section class="grid two">
+  <article class="card">
+    <h2>Upload result</h2>
+    <p>
+      Published <a href="/bundles/{{ result.bundle.id }}">{{ result.bundle.title }}</a>
+      into the catalog.
+    </p>
+  </article>
+  <article class="card">
+    <h2>Plugin results</h2>
+    <div class="stack">
+      {% for item in result.plugin_results %}
+      <div class="audit-row">
+        <strong>{{ item.status }}</strong>
+        <span>{{ item.message }}</span>
+      </div>
+      {% else %}
+      <p class="muted">No plugin output.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+{% endif %}
+{% endblock %}

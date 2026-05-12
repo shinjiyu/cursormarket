@@ -12,10 +12,21 @@ license = { text = "MIT" }
 authors = [
   { name = "Cursor Agent" }
 ]
-dependencies = []
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn>=0.32.0",
+  "jinja2>=3.1.4",
+  "python-multipart>=0.0.12",
+  "itsdangerous>=2.2.0",
+  "httpx>=0.28.0"
+]
 
 [project.scripts]
 cursor-agent-memory = "cursor_agent_memory.cli:main"
+cursor-agent-memory-web = "cursor_agent_memory.webapp:main"
 
 [tool.setuptools.packages.find]
 include = ["cursor_agent_memory*"]
+
+[tool.setuptools.package-data]
+cursor_agent_memory = ["templates/*.html", "static/*.css"]

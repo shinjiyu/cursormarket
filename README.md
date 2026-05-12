@@ -1,6 +1,6 @@
 # Cursor Agent Memory
 
-Extract local Cursor sessions on Windows into agent-friendly JSON.
+Extract local Cursor sessions on Windows into agent-friendly JSON, and run a local internal library UI for raw bundle upload, search, preview, and download.
 
 ## What it does
 
@@ -29,6 +29,51 @@ Or install it as a local CLI:
 ```powershell
 pip install -e .
 cursor-agent-memory --output .\out\cursor-export
+```
+
+## Internal library web app
+
+The repo now also includes a local internal-library experience for raw bundle publishing and discovery.
+
+### Start the web app
+
+```powershell
+pip install -e .
+python -m cursor_agent_memory.webapp
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8008
+```
+
+### Login modes
+
+- `Feishu` SSO if `FEISHU_APP_ID`, `FEISHU_APP_SECRET`, and `FEISHU_REDIRECT_URI` are configured
+- `Demo` role sessions for local development only
+
+### What you can do in the app
+
+- browse the catalog
+- inspect bundle detail pages
+- upload raw bundles with plugin checks
+- download raw bundle versions
+- inspect admin plugin state and audit events
+
+### Data storage
+
+The web app stores local metadata and artifacts under:
+
+```text
+app_data/
+```
+
+You can override this with:
+
+```powershell
+$env:CURSOR_AGENT_MEMORY_DATA_DIR="D:\somewhere\else"
+python -m cursor_agent_memory.webapp
 ```
 
 ## Useful flags

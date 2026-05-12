@@ -2,3 +2,5 @@ out/
 __pycache__/
 *.pyc
 .venv/
+app_data/
+*.egg-info/

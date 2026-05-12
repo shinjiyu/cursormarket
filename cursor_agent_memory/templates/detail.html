@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero compact">
+  <div>
+    <h1>{{ bundle.title }}</h1>
+    <p>{{ bundle.short_note or "No note provided." }}</p>
+  </div>
+  <div class="pill-row">
+    <span class="pill">{{ bundle.sensitivity }}</span>
+    {% if bundle.problem_type %}<span class="pill">{{ bundle.problem_type }}</span>{% endif %}
+    <span class="pill">{{ bundle.status }}</span>
+  </div>
+</section>
+
+<section class="grid two">
+  <article class="card">
+    <h2>Bundle Summary</h2>
+    <div class="meta-grid">
+      <span>Project: {{ bundle.project or "N/A" }}</span>
+      <span>Repo: {{ bundle.repo or "N/A" }}</span>
+      <span>Uploader: {{ bundle.uploader_name or "Unknown" }}</span>
+      <span>Updated: {{ bundle.updated_at }}</span>
+    </div>
+    {% set latest = bundle.versions[0] %}
+    <h3>Structure</h3>
+    <div class="meta-grid">
+      <span>{{ latest.manifest.message_count or "?" }} messages</span>
+      <span>{{ latest.manifest.tool_count or "?" }} tool events</span>
+      <span>{{ latest.manifest.transcript_event_count or "?" }} transcript events</span>
+      <span>{{ latest.manifest.touched_file_count or "?" }} touched files</span>
+    </div>
+    <div class="pill-row">
+      {% for tag in bundle.tags %}
+      <span class="pill soft">{{ tag }}</span>
+      {% endfor %}
+      {% for tool in latest.manifest.tools_used[:8] %}
+      <span class="pill soft">{{ tool }}</span>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="card">
+    <h2>Download</h2>
+    <form method="post" action="/bundles/{{ bundle.id }}/download">
+      <label>
+        <span>Version</span>
+        <select name="version_id">
+          {% for version in bundle.versions %}
+          <option value="{{ version.id }}">
+            {{ version.created_at }} · {{ version.filename }} · {{ version.size_bytes }} bytes
+          </option>
+          {% endfor %}
+        </select>
+      </label>
+      <button class="button primary" type="submit">Download raw bundle</button>
+    </form>
+    {% if bundle.policy %}
+    <p class="muted">Visibility: {{ bundle.policy.visibility }}</p>
+    {% endif %}
+  </article>
+</section>
+
+<section class="grid two">
+  <article class="card">
+    <h2>Safe Preview</h2>
+    {% if latest.preview.first_user_message %}
+    <blockquote>{{ latest.preview.first_user_message }}</blockquote>
+    {% endif %}
+    <div class="stack">
+      {% for snippet in latest.preview.snippets %}
+      <p class="preview-snippet">{{ snippet }}</p>
+      {% endfor %}
+      {% if not latest.preview.first_user_message and not latest.preview.snippets %}
+      <p class="muted">No safe preview available for this bundle.</p>
+      {% endif %}
+    </div>
+  </article>
+
+  <article class="card">
+    <h2>Plugin History</h2>
+    <div class="stack">
+      {% for run in bundle.plugin_runs %}
+      <div class="audit-row">
+        <strong>{{ run.hook_name }}</strong>
+        <span>{{ run.status }}</span>
+        <span class="muted">{{ run.summary or "No summary" }}</span>
+      </div>
+      {% else %}
+      <p class="muted">No plugin history yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+{% endblock %}
