@@ -76,6 +76,78 @@ $env:CURSOR_AGENT_MEMORY_DATA_DIR="D:\somewhere\else"
 python -m cursor_agent_memory.webapp
 ```
 
+## Cross-workspace logs (sync daemon + MCP)
+
+Use a **single export directory** on disk, refresh it on a schedule, then attach an **MCP server** in Cursor so every workspace can read the same session index and transcripts (not only the current project’s `.cursor` tree).
+
+### 1. Export directory
+
+By default exports go to:
+
+```text
+%USERPROFILE%\.cursor-agent-memory\export
+```
+
+Override with:
+
+```powershell
+$env:CURSOR_AGENT_MEMORY_EXPORT_DIR="D:\cursor-exports\canonical"
+```
+
+### 2. Scheduled export (local service)
+
+One-shot (good for Task Scheduler / cron):
+
+```powershell
+pip install -e .
+python -m cursor_agent_memory.sync_daemon --once
+```
+
+Long-running loop (default interval 3600 seconds, overridable with `CURSOR_AGENT_MEMORY_SYNC_INTERVAL_SECONDS`):
+
+```powershell
+python -m cursor_agent_memory.sync_daemon --interval 1800 --include-raw
+```
+
+Equivalent installed commands: `cursor-agent-memory-sync` with the same flags.
+
+### 3. MCP in Cursor
+
+Add a server that runs the packaged MCP entry (stdio). Point `CURSOR_AGENT_MEMORY_EXPORT_DIR` at the same folder as the sync daemon if you changed it.
+
+Example `mcp.json` fragment (adjust paths if `Scripts` is not on `PATH`):
+
+```json
+{
+  "mcpServers": {
+    "cursor-agent-memory-logs": {
+      "command": "cursor-agent-memory-mcp",
+      "env": {
+        "CURSOR_AGENT_MEMORY_EXPORT_DIR": "C:\\Users\\YOU\\.cursor-agent-memory\\export"
+      }
+    }
+  }
+}
+```
+
+If the shim is not on `PATH`, use `python` with `-m`:
+
+```json
+{
+  "mcpServers": {
+    "cursor-agent-memory-logs": {
+      "command": "python",
+      "args": ["-m", "cursor_agent_memory.mcp_server"],
+      "env": {
+        "CURSOR_AGENT_MEMORY_EXPORT_DIR": "C:\\Users\\YOU\\.cursor-agent-memory\\export"
+      }
+    }
+  }
+}
+```
+
+Tools exposed: `cursor_logs_export_dir`, `cursor_logs_read_manifest`, `cursor_logs_list_sessions`, `cursor_logs_search_sessions`, `cursor_logs_get_session`, `cursor_logs_read_workspaces`.
+
 ## Useful flags
 
 - `--limit 50` only export the most recent 50 sessions

@@ -18,12 +18,15 @@ dependencies = [
   "jinja2>=3.1.4",
   "python-multipart>=0.0.12",
   "itsdangerous>=2.2.0",
-  "httpx>=0.28.0"
+  "httpx>=0.28.0",
+  "mcp>=1.8.0"
 ]
 
 [project.scripts]
 cursor-agent-memory = "cursor_agent_memory.cli:main"
 cursor-agent-memory-web = "cursor_agent_memory.webapp:main"
+cursor-agent-memory-sync = "cursor_agent_memory.sync_daemon:main"
+cursor-agent-memory-mcp = "cursor_agent_memory.mcp_server:main"
 
 [tool.setuptools.packages.find]
 include = ["cursor_agent_memory*"]
