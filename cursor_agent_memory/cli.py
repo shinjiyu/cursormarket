@@ -1,56 +1,80 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 from .exporter import CursorMemoryExporter
+from .i18n import available_locales, env_locale, normalise, translate
 
 
-def build_parser() -> argparse.ArgumentParser:
+def _peek_lang(argv: list[str]) -> str:
+    """Find ``--lang VALUE`` or ``--lang=VALUE`` in argv before argparse runs."""
+    for index, token in enumerate(argv):
+        if token == "--lang" and index + 1 < len(argv):
+            return argv[index + 1]
+        if token.startswith("--lang="):
+            return token.split("=", 1)[1]
+    return env_locale()
+
+
+def build_parser(locale: str) -> argparse.ArgumentParser:
+    def _t(key: str) -> str:
+        return translate(key, locale)
+
     parser = argparse.ArgumentParser(
         prog="cursor-agent-memory",
-        description="Extract local Cursor sessions into agent-friendly JSON.",
+        description=_t("cli.export.description"),
+    )
+    parser.add_argument(
+        "--lang",
+        choices=available_locales(),
+        default=locale,
+        help=_t("cli.lang_help"),
     )
     parser.add_argument(
         "--output",
         required=True,
         type=Path,
-        help="Directory where extracted files will be written.",
+        help=_t("cli.export.help_output"),
     )
     parser.add_argument(
         "--cursor-user-root",
         type=Path,
         default=None,
-        help="Override the Cursor User directory. Defaults to %%APPDATA%%\\Cursor\\User.",
+        help=_t("cli.export.help_cursor_user_root"),
     )
     parser.add_argument(
         "--projects-root",
         type=Path,
         default=None,
-        help="Override the .cursor projects directory. Defaults to %%USERPROFILE%%\\.cursor\\projects.",
+        help=_t("cli.export.help_projects_root"),
     )
     parser.add_argument(
         "--limit",
         type=int,
         default=None,
-        help="Only export the most recently updated N sessions.",
+        help=_t("cli.export.help_limit"),
     )
     parser.add_argument(
         "--include-raw",
         action="store_true",
-        help="Also write raw transcript files and raw session payloads.",
+        help=_t("cli.export.help_include_raw"),
     )
     parser.add_argument(
         "--compact",
         action="store_true",
-        help="Write compact JSON instead of pretty printed files.",
+        help=_t("cli.export.help_compact"),
     )
     return parser
 
 
 def main() -> int:
-    parser = build_parser()
-    args = parser.parse_args()
+    argv = sys.argv[1:]
+    locale = normalise(_peek_lang(argv))
+    parser = build_parser(locale)
+    args = parser.parse_args(argv)
+    locale = normalise(args.lang)
 
     exporter = CursorMemoryExporter(
         output_dir=args.output,
@@ -63,10 +87,13 @@ def main() -> int:
     summary = exporter.export()
 
     print(
-        "Exported "
-        f"{summary['session_count']} sessions, "
-        f"{summary['workspace_count']} workspaces, "
-        f"and {summary['transcript_file_count']} transcript files "
-        f"to {summary['output_dir']}"
+        translate(
+            "cli.export.summary",
+            locale,
+            sessions=summary["session_count"],
+            workspaces=summary["workspace_count"],
+            transcripts=summary["transcript_file_count"],
+            output=summary["output_dir"],
+        )
     )
     return 0

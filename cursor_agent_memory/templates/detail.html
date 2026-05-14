@@ -3,7 +3,7 @@
 <section class="hero compact">
   <div>
     <h1>{{ bundle.title }}</h1>
-    <p>{{ bundle.short_note or "No note provided." }}</p>
+    <p>{{ bundle.short_note or t("common.no_note") }}</p>
   </div>
   <div class="pill-row">
     <span class="pill">{{ bundle.sensitivity }}</span>
@@ -14,20 +14,20 @@
 
 <section class="grid two">
   <article class="card">
-    <h2>Bundle Summary</h2>
+    <h2>{{ t("detail.summary") }}</h2>
     <div class="meta-grid">
-      <span>Project: {{ bundle.project or "N/A" }}</span>
-      <span>Repo: {{ bundle.repo or "N/A" }}</span>
-      <span>Uploader: {{ bundle.uploader_name or "Unknown" }}</span>
-      <span>Updated: {{ bundle.updated_at }}</span>
+      <span>{{ t("detail.project", value=bundle.project or "N/A") }}</span>
+      <span>{{ t("detail.repo", value=bundle.repo or "N/A") }}</span>
+      <span>{{ t("detail.uploader", value=bundle.uploader_name or t("common.unknown")) }}</span>
+      <span>{{ t("detail.updated", value=bundle.updated_at) }}</span>
     </div>
     {% set latest = bundle.versions[0] %}
-    <h3>Structure</h3>
+    <h3>{{ t("detail.structure") }}</h3>
     <div class="meta-grid">
-      <span>{{ latest.manifest.message_count or "?" }} messages</span>
-      <span>{{ latest.manifest.tool_count or "?" }} tool events</span>
-      <span>{{ latest.manifest.transcript_event_count or "?" }} transcript events</span>
-      <span>{{ latest.manifest.touched_file_count or "?" }} touched files</span>
+      <span>{{ t("catalog.messages", count=latest.manifest.message_count or "?") }}</span>
+      <span>{{ t("catalog.tool_events", count=latest.manifest.tool_count or "?") }}</span>
+      <span>{{ t("catalog.transcript_events", count=latest.manifest.transcript_event_count or "?") }}</span>
+      <span>{{ t("detail.touched_files", count=latest.manifest.touched_file_count or "?") }}</span>
     </div>
     <div class="pill-row">
       {% for tag in bundle.tags %}
@@ -40,10 +40,10 @@
   </article>
 
   <article class="card">
-    <h2>Download</h2>
+    <h2>{{ t("detail.download") }}</h2>
     <form method="post" action="/bundles/{{ bundle.id }}/download">
       <label>
-        <span>Version</span>
+        <span>{{ t("detail.version") }}</span>
         <select name="version_id">
           {% for version in bundle.versions %}
           <option value="{{ version.id }}">
@@ -52,17 +52,17 @@
           {% endfor %}
         </select>
       </label>
-      <button class="button primary" type="submit">Download raw bundle</button>
+      <button class="button primary" type="submit">{{ t("detail.download_button") }}</button>
     </form>
     {% if bundle.policy %}
-    <p class="muted">Visibility: {{ bundle.policy.visibility }}</p>
+    <p class="muted">{{ t("detail.visibility", value=bundle.policy.visibility) }}</p>
     {% endif %}
   </article>
 </section>
 
 <section class="grid two">
   <article class="card">
-    <h2>Safe Preview</h2>
+    <h2>{{ t("detail.safe_preview") }}</h2>
     {% if latest.preview.first_user_message %}
     <blockquote>{{ latest.preview.first_user_message }}</blockquote>
     {% endif %}
@@ -71,22 +71,22 @@
       <p class="preview-snippet">{{ snippet }}</p>
       {% endfor %}
       {% if not latest.preview.first_user_message and not latest.preview.snippets %}
-      <p class="muted">No safe preview available for this bundle.</p>
+      <p class="muted">{{ t("detail.no_preview") }}</p>
       {% endif %}
     </div>
   </article>
 
   <article class="card">
-    <h2>Plugin History</h2>
+    <h2>{{ t("detail.plugin_history") }}</h2>
     <div class="stack">
       {% for run in bundle.plugin_runs %}
       <div class="audit-row">
         <strong>{{ run.hook_name }}</strong>
         <span>{{ run.status }}</span>
-        <span class="muted">{{ run.summary or "No summary" }}</span>
+        <span class="muted">{{ run.summary or t("detail.no_summary") }}</span>
       </div>
       {% else %}
-      <p class="muted">No plugin history yet.</p>
+      <p class="muted">{{ t("detail.no_plugin_history") }}</p>
       {% endfor %}
     </div>
   </article>

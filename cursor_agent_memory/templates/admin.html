@@ -2,25 +2,25 @@
 {% block content %}
 <section class="hero compact">
   <div>
-    <h1>Admin</h1>
-    <p>Configure auth, plugins, and audit visibility for the internal library.</p>
+    <h1>{{ t("admin.title") }}</h1>
+    <p>{{ t("admin.subtitle") }}</p>
   </div>
 </section>
 
 <section class="grid two">
   <article class="card">
-    <h2>Auth status</h2>
+    <h2>{{ t("admin.auth_status") }}</h2>
     <div class="stack">
       <div class="audit-row">
-        <strong>Feishu</strong>
-        <span>{% if auth_status.feishu_enabled %}Configured{% else %}Not configured{% endif %}</span>
+        <strong>{{ t("admin.feishu") }}</strong>
+        <span>{% if auth_status.feishu_enabled %}{{ t("admin.configured") }}{% else %}{{ t("admin.not_configured") }}{% endif %}</span>
       </div>
-      <p class="muted">MVP uses Feishu in production and demo role sessions in local development.</p>
+      <p class="muted">{{ t("admin.feishu_note") }}</p>
     </div>
   </article>
 
   <article class="card">
-    <h2>Plugins</h2>
+    <h2>{{ t("admin.plugins") }}</h2>
     <div class="stack">
       {% for plugin in plugins %}
       <form class="audit-row" method="post" action="/admin/plugins/{{ plugin.id }}/toggle">
@@ -29,7 +29,7 @@
           <div class="muted">{{ plugin.hook_name }} · {{ plugin.provider }}</div>
         </div>
         <button class="button" type="submit">
-          {% if plugin.enabled %}Disable{% else %}Enable{% endif %}
+          {% if plugin.enabled %}{{ t("admin.disable") }}{% else %}{{ t("admin.enable") }}{% endif %}
         </button>
       </form>
       {% endfor %}
@@ -38,19 +38,19 @@
 </section>
 
 <section class="card">
-  <h2>Recent audit trail</h2>
+  <h2>{{ t("admin.recent_audit") }}</h2>
   <div class="stack">
     {% for event in audit_events %}
     <div class="audit-row">
       <div>
         <strong>{{ event.event_name }}</strong>
-        <div class="muted">{{ event.actor_name or event.actor_id or "System" }}</div>
+        <div class="muted">{{ event.actor_name or event.actor_id or t("common.system") }}</div>
       </div>
       <div class="muted">{{ event.title or event.bundle_id or "-" }}</div>
       <div class="muted">{{ event.created_at }}</div>
     </div>
     {% else %}
-    <p class="muted">No audit events yet.</p>
+    <p class="muted">{{ t("admin.no_audit") }}</p>
     {% endfor %}
   </div>
 </section>

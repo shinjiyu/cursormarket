@@ -44,4 +44,4 @@ org-contributor-evaluation-run-to-markdown = "org_contributor_pipeline.evaluatio
 include = ["cursor_agent_memory*", "org_contributor_pipeline*"]
 
 [tool.setuptools.package-data]
-cursor_agent_memory = ["templates/*.html", "static/*.css"]
+cursor_agent_memory = ["templates/*.html", "static/*.css", "locales/*.json"]

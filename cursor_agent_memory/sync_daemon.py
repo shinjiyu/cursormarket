@@ -9,6 +9,7 @@ import time
 from pathlib import Path
 
 from .exporter import CursorMemoryExporter
+from .i18n import available_locales, env_locale, normalise, translate
 from .paths import get_export_root
 
 
@@ -32,37 +33,63 @@ def run_once(
     return exporter.export()
 
 
-def main() -> int:
+def _peek_lang(argv: list[str]) -> str:
+    for index, token in enumerate(argv):
+        if token == "--lang" and index + 1 < len(argv):
+            return argv[index + 1]
+        if token.startswith("--lang="):
+            return token.split("=", 1)[1]
+    return env_locale()
+
+
+def build_parser(locale: str) -> argparse.ArgumentParser:
+    def _t(key: str) -> str:
+        return translate(key, locale)
+
     parser = argparse.ArgumentParser(
         prog="cursor-agent-memory-sync",
-        description="Periodically export Cursor local sessions to CURSOR_AGENT_MEMORY_EXPORT_DIR.",
+        description=_t("cli.sync.description"),
+    )
+    parser.add_argument(
+        "--lang",
+        choices=available_locales(),
+        default=locale,
+        help=_t("cli.lang_help"),
     )
     parser.add_argument(
         "--once",
         action="store_true",
-        help="Run a single export and exit (for Task Scheduler / cron).",
+        help=_t("cli.sync.help_once"),
     )
     parser.add_argument(
         "--interval",
         type=int,
         default=int(os.environ.get("CURSOR_AGENT_MEMORY_SYNC_INTERVAL_SECONDS", "3600")),
-        help="Seconds between exports when not using --once. Default from env or 3600.",
+        help=_t("cli.sync.help_interval"),
     )
     parser.add_argument(
         "--include-raw",
         action="store_true",
-        help="Also export raw composer payloads and transcript copies.",
+        help=_t("cli.sync.help_include_raw"),
     )
     parser.add_argument(
         "--limit",
         type=int,
         default=None,
-        help="Only export the N most recently updated sessions.",
+        help=_t("cli.sync.help_limit"),
     )
     parser.add_argument("--cursor-user-root", type=Path, default=None)
     parser.add_argument("--projects-root", type=Path, default=None)
     parser.add_argument("--compact", action="store_true")
-    args = parser.parse_args()
+    return parser
+
+
+def main() -> int:
+    argv = sys.argv[1:]
+    locale = normalise(_peek_lang(argv))
+    parser = build_parser(locale)
+    args = parser.parse_args(argv)
+    locale = normalise(args.lang)
 
     include_raw = args.include_raw or os.environ.get("CURSOR_AGENT_MEMORY_INCLUDE_RAW", "").lower() in (
         "1",
@@ -79,14 +106,24 @@ def main() -> int:
             compact=args.compact,
         )
         print(
-            f"Exported {summary['session_count']} sessions to {summary['output_dir']}",
+            translate(
+                "cli.sync.summary_once",
+                locale,
+                sessions=summary["session_count"],
+                output=summary["output_dir"],
+            ),
             file=sys.stderr,
         )
         return 0
 
     interval = max(60, args.interval)
     print(
-        f"cursor-agent-memory-sync: exporting every {interval}s to {get_export_root()}",
+        translate(
+            "cli.sync.loop_start",
+            locale,
+            interval=interval,
+            output=get_export_root(),
+        ),
         file=sys.stderr,
     )
     while True:
@@ -99,12 +136,25 @@ def main() -> int:
                 compact=args.compact,
             )
             print(
-                f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] "
-                f"{summary['session_count']} sessions -> {summary['output_dir']}",
+                translate(
+                    "cli.sync.loop_iter",
+                    locale,
+                    ts=time.strftime("%Y-%m-%d %H:%M:%S"),
+                    sessions=summary["session_count"],
+                    output=summary["output_dir"],
+                ),
                 file=sys.stderr,
             )
         except Exception as exc:  # noqa: BLE001
-            print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] export failed: {exc}", file=sys.stderr)
+            print(
+                translate(
+                    "cli.sync.loop_failed",
+                    locale,
+                    ts=time.strftime("%Y-%m-%d %H:%M:%S"),
+                    error=exc,
+                ),
+                file=sys.stderr,
+            )
         time.sleep(interval)
 
 

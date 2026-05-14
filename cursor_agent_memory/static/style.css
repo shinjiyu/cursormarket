@@ -51,6 +51,16 @@ a {
   flex-wrap: wrap;
 }
 
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang-switch a.pill {
+  text-decoration: none;
+}
+
 .page {
   max-width: 1180px;
   margin: 0 auto;

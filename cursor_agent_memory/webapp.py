@@ -13,6 +13,15 @@ from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 
 from .auth import AuthService
+from .i18n import (
+    DEFAULT_LOCALE,
+    ENV_VAR as LOCALE_ENV_VAR,
+    available_locales,
+    make_translator,
+    resolve_locale,
+    supported_locale_labels,
+    translate,
+)
 from .plugins import PluginEngine
 from .storage import AppStore, utc_now_iso
 
@@ -21,6 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent
 TEMPLATES_DIR = BASE_DIR / "templates"
 STATIC_DIR = BASE_DIR / "static"
 SESSION_SECRET = os.environ.get("CURSOR_AGENT_MEMORY_SESSION_SECRET", "cursor-agent-memory-dev-secret")
+LOCALE_SESSION_KEY = "locale"
 
 app = FastAPI(title="Cursor Agent Memory Web")
 app.add_middleware(SessionMiddleware, secret_key=SESSION_SECRET, same_site="lax")
@@ -30,6 +40,23 @@ templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 store = AppStore()
 plugins = PluginEngine(store)
 auth = AuthService()
+
+
+def current_locale(request: Request) -> str:
+    return resolve_locale(
+        requested=request.query_params.get("lang"),
+        session=request.session.get(LOCALE_SESSION_KEY),
+        accept_language=request.headers.get("accept-language"),
+        env=os.environ.get(LOCALE_ENV_VAR) or None,
+    )
+
+
+def t(request: Request, key: str, **variables: Any) -> str:
+    return translate(key, current_locale(request), **variables)
+
+
+def http_error(request: Request, status_code: int, key: str, **variables: Any) -> HTTPException:
+    return HTTPException(status_code=status_code, detail=t(request, key, **variables))
 
 
 def current_user(request: Request) -> dict[str, Any] | None:
@@ -42,7 +69,7 @@ def current_user(request: Request) -> dict[str, Any] | None:
 def require_user(request: Request) -> dict[str, Any]:
     user = current_user(request)
     if user is None:
-        raise HTTPException(status_code=401, detail="Authentication required.")
+        raise http_error(request, 401, "error.auth_required")
     return user
 
 
@@ -53,16 +80,22 @@ def role_rank(role: str) -> int:
 def require_role(request: Request, minimum_role: str) -> dict[str, Any]:
     user = require_user(request)
     if role_rank(user["role"]) < role_rank(minimum_role):
-        raise HTTPException(status_code=403, detail="Insufficient permissions.")
+        raise http_error(request, 403, "error.insufficient_permissions")
     return user
 
 
 def render(request: Request, template_name: str, context: dict[str, Any]) -> Any:
+    locale = current_locale(request)
     context.update(
         {
             "request": request,
             "current_user": current_user(request),
             "feishu_enabled": auth.feishu_enabled,
+            "t": make_translator(locale),
+            "current_locale": locale,
+            "default_locale": DEFAULT_LOCALE,
+            "available_locales": available_locales(),
+            "locale_labels": supported_locale_labels(),
         }
     )
     return templates.TemplateResponse(request, template_name, context)
@@ -142,8 +175,21 @@ async def logout(request: Request) -> Any:
     user = current_user(request)
     if user:
         store.record_usage_event("logout", user["id"])
+    saved_locale = request.session.get(LOCALE_SESSION_KEY)
     request.session.clear()
+    if saved_locale:
+        request.session[LOCALE_SESSION_KEY] = saved_locale
     return RedirectResponse(url="/login", status_code=302)
+
+
+@app.get("/lang/{code}")
+async def switch_language(request: Request, code: str, next: str | None = None) -> Any:
+    if code in available_locales():
+        request.session[LOCALE_SESSION_KEY] = code
+    target = next or request.headers.get("referer") or "/catalog"
+    if not target.startswith("/"):
+        target = "/catalog"
+    return RedirectResponse(url=target, status_code=302)
 
 
 @app.get("/catalog")
@@ -181,9 +227,9 @@ async def bundle_detail(request: Request, bundle_id: str) -> Any:
     user = require_user(request)
     bundle = store.get_bundle(bundle_id)
     if bundle is None:
-        raise HTTPException(status_code=404, detail="Bundle not found.")
+        raise http_error(request, 404, "error.bundle_not_found")
     if not bundle_access_allowed(user, bundle):
-        raise HTTPException(status_code=403, detail="Bundle is restricted.")
+        raise http_error(request, 403, "error.bundle_restricted")
     return render(
         request,
         "detail.html",
@@ -233,7 +279,7 @@ async def upload_bundle(
     }
 
     if not bundle_file.filename:
-        errors.append("Please choose a bundle file.")
+        errors.append(t(request, "upload.error_choose_file"))
         return render(request, "upload.html", {"result": result, "errors": errors, "form_data": form_data})
 
     tmp_path: Path | None = None
@@ -282,7 +328,7 @@ async def upload_bundle(
             if item.get("metadata"):
                 metadata.update(item["metadata"])
             if item.get("status") == "reject":
-                errors.append(item.get("message") or "Upload rejected by plugin.")
+                errors.append(item.get("message") or t(request, "upload.error_plugin_rejected"))
 
         if errors:
             result = {"plugin_results": hook_results}
@@ -317,9 +363,9 @@ async def create_download(request: Request, bundle_id: str, version_id: str | No
     user = require_user(request)
     bundle = store.get_bundle(bundle_id)
     if bundle is None:
-        raise HTTPException(status_code=404, detail="Bundle not found.")
+        raise http_error(request, 404, "error.bundle_not_found")
     if not bundle_access_allowed(user, bundle):
-        raise HTTPException(status_code=403, detail="Not allowed to download this bundle.")
+        raise http_error(request, 403, "error.download_not_allowed")
 
     selected_version = None
     for version in bundle["versions"]:
@@ -338,7 +384,10 @@ async def create_download(request: Request, bundle_id: str, version_id: str | No
     before_results = plugins.run("before_download", before_context)
     for result in before_results:
         if result.get("status") == "reject":
-            raise HTTPException(status_code=403, detail=result.get("message") or "Download rejected.")
+            raise HTTPException(
+                status_code=403,
+                detail=result.get("message") or t(request, "error.download_rejected"),
+            )
 
     token = store.create_download_grant(
         actor_id=user["id"],
@@ -369,7 +418,7 @@ async def use_download_grant(request: Request, token: str) -> Any:
     require_user(request)
     grant = store.resolve_download_grant(token)
     if grant is None:
-        raise HTTPException(status_code=404, detail="Download grant expired or missing.")
+        raise http_error(request, 404, "error.download_grant_missing")
     return FileResponse(path=grant["storage_path"], filename=grant["filename"], media_type="application/octet-stream")
 
 

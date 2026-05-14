@@ -2,21 +2,21 @@
 {% block content %}
 <section class="hero compact">
   <div>
-    <h1>Catalog</h1>
-    <p>Search internal raw bundles and decide which ones are worth local analysis.</p>
+    <h1>{{ t("catalog.title") }}</h1>
+    <p>{{ t("catalog.subtitle") }}</p>
   </div>
   <div class="stats">
     <div class="stat">
       <strong>{{ stats.bundle_count }}</strong>
-      <span>Visible bundles</span>
+      <span>{{ t("catalog.stat_visible_bundles") }}</span>
     </div>
     <div class="stat">
       <strong>{{ stats.project_count }}</strong>
-      <span>Projects</span>
+      <span>{{ t("catalog.stat_projects") }}</span>
     </div>
     <div class="stat">
       <strong>{{ stats.download_count }}</strong>
-      <span>My downloads</span>
+      <span>{{ t("catalog.stat_my_downloads") }}</span>
     </div>
   </div>
 </section>
@@ -24,31 +24,31 @@
 <form class="card filters" method="get" action="/catalog">
   <div class="grid four">
     <label>
-      <span>Search</span>
-      <input type="text" name="q" value="{{ query.q }}" placeholder="title, tags, note" />
+      <span>{{ t("catalog.field_search") }}</span>
+      <input type="text" name="q" value="{{ query.q }}" placeholder="{{ t('catalog.search_placeholder') }}" />
     </label>
     <label>
-      <span>Project</span>
+      <span>{{ t("catalog.field_project") }}</span>
       <select name="project">
-        <option value="">All</option>
+        <option value="">{{ t("common.all") }}</option>
         {% for item in filters.projects %}
         <option value="{{ item }}" {% if query.project == item %}selected{% endif %}>{{ item }}</option>
         {% endfor %}
       </select>
     </label>
     <label>
-      <span>Problem Type</span>
+      <span>{{ t("catalog.field_problem_type") }}</span>
       <select name="problem_type">
-        <option value="">All</option>
+        <option value="">{{ t("common.all") }}</option>
         {% for item in filters.problem_types %}
         <option value="{{ item }}" {% if query.problem_type == item %}selected{% endif %}>{{ item }}</option>
         {% endfor %}
       </select>
     </label>
     <label>
-      <span>Sensitivity</span>
+      <span>{{ t("catalog.field_sensitivity") }}</span>
       <select name="sensitivity">
-        <option value="">All</option>
+        <option value="">{{ t("common.all") }}</option>
         {% for item in filters.sensitivities %}
         <option value="{{ item }}" {% if query.sensitivity == item %}selected{% endif %}>{{ item }}</option>
         {% endfor %}
@@ -56,8 +56,8 @@
     </label>
   </div>
   <div class="actions">
-    <button class="button primary" type="submit">Search</button>
-    <a class="button" href="/catalog">Reset</a>
+    <button class="button primary" type="submit">{{ t("common.search") }}</button>
+    <a class="button" href="/catalog">{{ t("common.reset") }}</a>
   </div>
 </form>
 
@@ -67,18 +67,18 @@
     <div class="result-header">
       <div>
         <h2><a href="/bundles/{{ bundle.id }}">{{ bundle.title }}</a></h2>
-        <p class="muted">{{ bundle.project or "No project" }} · {{ bundle.uploader_name or "Unknown uploader" }}</p>
+        <p class="muted">{{ bundle.project or t("catalog.no_project") }} · {{ bundle.uploader_name or t("catalog.unknown_uploader") }}</p>
       </div>
       <div class="pill-row">
         <span class="pill">{{ bundle.sensitivity }}</span>
         {% if bundle.problem_type %}<span class="pill">{{ bundle.problem_type }}</span>{% endif %}
       </div>
     </div>
-    <p>{{ bundle.short_note or "No note provided." }}</p>
+    <p>{{ bundle.short_note or t("common.no_note") }}</p>
     <div class="meta-grid">
-      <span>{{ bundle.manifest.message_count or "?" }} messages</span>
-      <span>{{ bundle.manifest.tool_count or "?" }} tool events</span>
-      <span>{{ bundle.manifest.transcript_event_count or "?" }} transcript events</span>
+      <span>{{ t("catalog.messages", count=bundle.manifest.message_count or "?") }}</span>
+      <span>{{ t("catalog.tool_events", count=bundle.manifest.tool_count or "?") }}</span>
+      <span>{{ t("catalog.transcript_events", count=bundle.manifest.transcript_event_count or "?") }}</span>
       <span>{{ bundle.updated_at }}</span>
     </div>
     {% if bundle.preview.first_user_message %}
@@ -97,8 +97,8 @@
   </article>
   {% else %}
   <article class="card empty">
-    <h2>No bundles found</h2>
-    <p>Try broader filters or publish your first bundle.</p>
+    <h2>{{ t("catalog.empty_title") }}</h2>
+    <p>{{ t("catalog.empty_subtitle") }}</p>
   </article>
   {% endfor %}
 </section>

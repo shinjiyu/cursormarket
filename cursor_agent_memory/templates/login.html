@@ -2,31 +2,29 @@
 {% block content %}
 <section class="hero">
   <div>
-    <h1>Internal raw bundle library</h1>
-    <p>
-      Upload, discover, preview, and download raw Cursor bundles. Deep analysis stays local.
-    </p>
+    <h1>{{ t("login.title") }}</h1>
+    <p>{{ t("login.subtitle") }}</p>
   </div>
 </section>
 
 <section class="grid two">
   <article class="card">
-    <h2>Feishu sign-in</h2>
+    <h2>{{ t("login.feishu_title") }}</h2>
     {% if feishu_enabled %}
-    <p>Use Feishu SSO for normal internal access.</p>
-    <a class="button primary" href="/auth/feishu/start">Continue with Feishu</a>
+    <p>{{ t("login.feishu_use_sso") }}</p>
+    <a class="button primary" href="/auth/feishu/start">{{ t("login.feishu_continue") }}</a>
     {% else %}
-    <p>Feishu is not configured in this local environment yet.</p>
-    <span class="pill warning">Not configured</span>
+    <p>{{ t("login.feishu_not_configured") }}</p>
+    <span class="pill warning">{{ t("login.feishu_not_configured_pill") }}</span>
     {% endif %}
   </article>
 
   <article class="card">
-    <h2>Demo access</h2>
-    <p>Development-only entry path. No passwords, just role-based demo sessions.</p>
+    <h2>{{ t("login.demo_title") }}</h2>
+    <p>{{ t("login.demo_subtitle") }}</p>
     <div class="stack">
       {% for item in demo_users %}
-      <a class="button" href="/auth/demo?role={{ item.role }}">Continue as {{ item.display_name }}</a>
+      <a class="button" href="/auth/demo?role={{ item.role }}">{{ t("login.demo_continue_as", name=item.display_name) }}</a>
       {% endfor %}
     </div>
   </article>

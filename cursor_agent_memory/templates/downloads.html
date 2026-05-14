@@ -2,8 +2,8 @@
 {% block content %}
 <section class="hero compact">
   <div>
-    <h1>My downloads</h1>
-    <p>Track bundles you have already pulled into local analysis workflows.</p>
+    <h1>{{ t("downloads.title") }}</h1>
+    <p>{{ t("downloads.subtitle") }}</p>
   </div>
 </section>
 
@@ -12,15 +12,15 @@
   <article class="card">
     <h2>{{ item.title or item.bundle_id }}</h2>
     <div class="meta-grid">
-      <span>Version: {{ item.version_id }}</span>
-      <span>File: {{ item.filename or "Unknown" }}</span>
-      <span>Downloaded: {{ item.created_at }}</span>
+      <span>{{ t("downloads.version", value=item.version_id) }}</span>
+      <span>{{ t("downloads.file", value=item.filename or t("common.unknown")) }}</span>
+      <span>{{ t("downloads.downloaded", value=item.created_at) }}</span>
     </div>
   </article>
   {% else %}
   <article class="card empty">
-    <h2>No downloads yet</h2>
-    <p>Download a bundle from the catalog to start building local analysis history.</p>
+    <h2>{{ t("downloads.empty_title") }}</h2>
+    <p>{{ t("downloads.empty_subtitle") }}</p>
   </article>
   {% endfor %}
 </section>
