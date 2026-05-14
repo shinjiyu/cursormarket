@@ -1,0 +1,75 @@
+# Publishing-only pyproject for the `cursor-agent-memory` package.
+#
+# The repo root pyproject.toml is the *monorepo dev* config and intentionally
+# bundles the internal `org_contributor_pipeline`. This one ships ONLY the
+# cursor_agent_memory package to PyPI.
+#
+# Don't run `python -m build` here directly — the package source and README
+# live at the repo root, not next to this file. Use the publish script:
+#
+#   scripts/publish.ps1   # Windows
+#   scripts/publish.sh    # macOS / Linux
+#
+# It copies cursor_agent_memory/ and README.md next to this pyproject into a
+# disposable staging dir, runs `python -m build`, and leaves the artifacts in
+# `packaging/cursor-agent-memory/dist/`.
+
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cursor-agent-memory"
+version = "0.1.0"
+description = "Share local Cursor sessions across every Cursor window via a stdio MCP server."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+  { name = "shinjiyu" }
+]
+keywords = ["cursor", "mcp", "agent", "memory", "ide", "local-first"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development",
+  "Topic :: Utilities",
+]
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn>=0.32.0",
+  "jinja2>=3.1.4",
+  "python-multipart>=0.0.12",
+  "itsdangerous>=2.2.0",
+  "httpx>=0.28.0",
+  "mcp>=1.8.0",
+]
+
+[project.urls]
+Homepage      = "https://github.com/shinjiyu/cursormarket"
+Repository    = "https://github.com/shinjiyu/cursormarket"
+Issues        = "https://github.com/shinjiyu/cursormarket/issues"
+
+[project.scripts]
+cursor-agent-memory      = "cursor_agent_memory.cli:main"
+cursor-agent-memory-web  = "cursor_agent_memory.webapp:main"
+cursor-agent-memory-sync = "cursor_agent_memory.sync_daemon:main"
+cursor-agent-memory-mcp  = "cursor_agent_memory.mcp_server:main"
+
+[tool.setuptools.packages.find]
+include = ["cursor_agent_memory*"]
+
+[tool.setuptools.package-data]
+cursor_agent_memory = [
+  "templates/*.html",
+  "static/*.css",
+  "locales/*.json",
+]

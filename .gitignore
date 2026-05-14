@@ -11,3 +11,11 @@ org_contributor_pipeline/artifacts/generated/**
 org_contributor_pipeline/artifacts/reports/**
 !org_contributor_pipeline/artifacts/reports/README.md
 .secrets/gitlab_token
+
+# Demo / examples output
+examples/demo-export/
+
+# Local stash files used by previous chat
+_agent_redirect_test.log
+_agent_stdout_test.log
+dist/
