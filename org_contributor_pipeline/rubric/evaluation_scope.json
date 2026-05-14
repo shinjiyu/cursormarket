@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "notes_zh": "必评名单：阶段 1～3 须逐人覆盖；person_keys 为 artifact 中 person_key（多为 Git author_email）。若「主责游戏」与邮箱对应存疑，由主管在 JSON 中改 person_keys 后重跑。",
+  "required_people": [
+    {
+      "display_zh": "林耕宇",
+      "game_zh": "赛特2",
+      "person_keys": ["ericlin09.fgrd3@gmail.com"],
+      "primary_project_path_prefix": "h5_game_sh_tpe/seth2"
+    },
+    {
+      "display_zh": "包峰華",
+      "game_zh": "大闹东海",
+      "person_keys": ["dpunity920000@gmail.com"],
+      "primary_project_path_prefix": "h5_game_sh_tpe/da-nao-dong-hai"
+    },
+    {
+      "display_zh": "李紳旭",
+      "game_zh": "喵財進寶",
+      "person_keys": ["psunnysunq@gmail.com"],
+      "primary_project_path_prefix": "h5_game_sh_tpe/miao-cai-jin-bao",
+      "mapping_note_zh": "按本窗口该路径 stable 提交量最高者推断；若非本人请改 person_keys。"
+    },
+    {
+      "display_zh": "蕭志文",
+      "game_zh": "麻將胡了",
+      "person_keys": ["fg000406@fingergame.com.tw"],
+      "primary_project_path_prefix": "h5_game_sh_tpe/ma-jiang-hu-le",
+      "mapping_note_zh": "按本窗口该路径 stable 提交量最高者推断；若非本人请改 person_keys。"
+    },
+    {
+      "display_zh": "李育瑋",
+      "game_zh": "仙境傳說",
+      "person_keys": ["pd36579@gmail.com"],
+      "primary_project_path_prefix": "h5_game_sh_tpe/xian-jing-chuan-shuo",
+      "mapping_note_zh": "按本窗口该路径 stable 提交量最高者推断；若非本人请改 person_keys。"
+    },
+    {
+      "display_zh": "蔡政廷",
+      "game_zh": "雷神之錘",
+      "person_keys": ["jackal0807@hotmail.com"],
+      "primary_project_path_prefix": "h5_game_sh_tpe/lei-shen-zhi-chui",
+      "mapping_note_zh": "按本窗口该路径 stable 提交量最高者推断；若非本人请改 person_keys。"
+    },
+    {
+      "display_zh": "于振宇",
+      "game_zh": "（跨仓 / 工具）",
+      "person_keys": ["1806153872@qq.com"],
+      "display_aliases_zh": ["常用联系邮箱：shinjiyu@boke.com（若与 Git author 不一致，以 mailmap 对齐后再评）"]
+    },
+    {
+      "display_zh": "秦超",
+      "game_zh": "（公共 / 协议）",
+      "person_keys": ["932493926@qq.com"],
+      "author_name_hints": ["qc_boke"]
+    }
+  ]
+}

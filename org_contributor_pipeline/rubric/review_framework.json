@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "title_zh": "必审能力块与证据口径（非仅靠插件）",
+  "notes_zh": "下列三大 L1 及其全部 L2 为「必审」：阶段 2/3 必须逐人、逐 L2 给出可复述叙述或等级草稿。允许证据来自：① 专用/弱代理插件；② commit_events（路径、标题、体量、URL）；③ ``metadata.commit_diff``（``enrich_commit_diffs`` 写入的截断 unified diff，按文件分列）；④ ``meta.repo_catalog``（clone URL + recent_shas；Agent 在本地按需 ``git clone``/checkout，流水线不代劳）；⑤ 与插件交叉印证。无 MR 时仍可用 ②③④ 写可见实现线索；不得编造未出现在 diff/检出树中的符号级细节；须写明截断/未取到的文件，并标注置信度。",
+  "dimensions_ref": "dimensions.json",
+  "mandatory_l1": [
+    {
+      "id": "technical_fundamentals",
+      "title_zh": "基础技术能力",
+      "level2": [
+        {
+          "id": "cs_complexity",
+          "title_zh": "数据结构、算法与复杂度",
+          "evidence_zh": "优先 MR/CR/面试；无则：从标题与变更体量推断是否触及算法/边界类工作，不可见处标「—」并说明缺 diff。"
+        },
+        {
+          "id": "language_runtime",
+          "title_zh": "语言深度与运行栈",
+          "evidence_zh": "从仓库技术栈（路径、扩展名、标题关键词如 TS/并发/内存）与持续提交模式写可见线索；深度结论须待 MR 或静态分析。"
+        },
+        {
+          "id": "data_storage",
+          "title_zh": "数据与持久化",
+          "evidence_zh": "标题/路径是否出现迁移、事务、索引、ORM 等；无则 N/A（材料）+ 一句补证建议。"
+        },
+        {
+          "id": "design_tooling",
+          "title_zh": "设计表达与工程化底座",
+          "evidence_zh": "构建/依赖/重构/模块化类标题与路径；可与 design_tooling、工程化目录变更交叉。"
+        }
+      ]
+    },
+    {
+      "id": "engineering_ability",
+      "title_zh": "工程能力",
+      "level2": [
+        {
+          "id": "structure_modularity",
+          "title_zh": "结构、模块化与解耦",
+          "evidence_zh": "从路径分层、拆分/合并提交、子模块与 common 触碰写事实句；不等价架构评审。"
+        },
+        {
+          "id": "maintainability",
+          "title_zh": "可维护性与演进",
+          "evidence_zh": "重构、清理、命名、Revert 链、文档类提交；须与具体 sha 标题挂钩。"
+        },
+        {
+          "id": "quality_gates",
+          "title_zh": "规范与质量门禁",
+          "evidence_zh": "插件 commit_title_signals 弱代理 + 标题中 test/lint 等；缺 CI 结果则标材料缺口。"
+        },
+        {
+          "id": "cicd_release",
+          "title_zh": "CI/CD 与发布",
+          "evidence_zh": "标题/路径中 CI、release、workflow 类 + commit_title_signals；可要求补 pipeline 链接。"
+        },
+        {
+          "id": "observability_debug",
+          "title_zh": "可观测性与排障",
+          "evidence_zh": "日志/指标/trace 类标题 + commit_title_signals；无线上工单则置信度标低。"
+        },
+        {
+          "id": "vcs_footprint",
+          "title_zh": "版本库活动与可追溯（Git 代理）",
+          "evidence_zh": "插件 delivery_traceability；与 title/web_url 完整度交叉。"
+        }
+      ]
+    },
+    {
+      "id": "system_design",
+      "title_zh": "系统设计能力",
+      "level2": [
+        {
+          "id": "architecture_boundaries",
+          "title_zh": "架构与边界",
+          "evidence_zh": "path_taxonomy_proxy 为路径粗分 + commit 跨仓模式；须 disclaimer，重大结论待 MR/设计文档。"
+        },
+        {
+          "id": "scale_reliability",
+          "title_zh": "规模、并发与可用性",
+          "evidence_zh": "标题/路径中限流、容灾、多活、并发等关键词；无则 — 或 N/A（材料）。"
+        },
+        {
+          "id": "data_platform_patterns",
+          "title_zh": "数据路径与中间件",
+          "evidence_zh": "MQ/缓存/消费顺序等标题或配置路径线索；无则说明缺中间件变更样本。"
+        },
+        {
+          "id": "state_consistency_cost",
+          "title_zh": "状态、一致性与成本",
+          "evidence_zh": "状态机、补偿、费用、扩缩容相关标题；弱线索时标低置信。"
+        }
+      ]
+    }
+  ]
+}

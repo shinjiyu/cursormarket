@@ -1,0 +1,2227 @@
+{
+  "schema_version": "evaluation_run.v1",
+  "run": {
+    "run_id": "dad43046-2012-42f3-9d44-a015abc727c3",
+    "created_at": "2026-05-13T14:27:28Z",
+    "run_kind_requested": "full",
+    "run_kind_effective": "full",
+    "baseline_run_id": null,
+    "pipeline_capability_epoch": 1,
+    "artifact_path": "D:\\tools\\cursorLogViewer\\org_contributor_pipeline\\artifacts\\generated\\gitlab_group_artifact_scoped.json",
+    "artifact_fingerprint": "f0ee2a724f5a8620febd5a11",
+    "window_start": "2026-03-01T00:00:00Z",
+    "window_end": "2026-05-13T00:00:00Z",
+    "gitlab_group": "h5_game_sh_tpe",
+    "ingest": {
+      "source": "gitlab_api_v4",
+      "commit_row_count": 2595
+    },
+    "plugins_applied": [
+      "delivery_traceability@0.1.0",
+      "commit_title_signals@0.1.0",
+      "path_taxonomy_proxy@0.1.0",
+      "identity_footprint@0.1.0"
+    ]
+  },
+  "workflow": {
+    "version": 1,
+    "description_zh": "新增考核能力或更换 rubric/插件世代 → 对项目做一次全量审核并打底分；之后在同一基线上可对增量提交续打分。若当前资料不足以稳定打分（证据门槛未全绿），下一次须先全量，不要只做增量。",
+    "triggers_full_rescore_zh": [
+      "pipeline_capability_epoch 递增（新插件/新 ingest 口径）",
+      "evaluation_scope / mailmap 变更",
+      "artifact 时间窗大幅变更",
+      "workflow.derived_next_run_recommendation 为 full（证据不足或 partial）"
+    ],
+    "incremental_merge": {
+      "uses_baseline_json": false,
+      "applied": false,
+      "copies_non_null_grades": true,
+      "facts_always_from_current_artifact": true,
+      "includes_prior_attachment": false
+    },
+    "evidence_tier": "weak",
+    "derived_next_run_recommendation": "full",
+    "reason_codes": [
+      "evidence_partial_not_enough_for_stable_scores"
+    ],
+    "reason_zh": "存在必评人员资料不足以稳定覆盖必审 L2（diff/体量门槛未过）；下次仍须先全量打分。",
+    "coercion": null
+  },
+  "rubric": {
+    "review_framework_schema_version": 1,
+    "review_framework_title_zh": "必审能力块与证据口径（非仅靠插件）",
+    "mandatory_l2_count": 14,
+    "mandatory_l2_dimensions": [
+      {
+        "l1_id": "technical_fundamentals",
+        "l1_title_zh": "基础技术能力",
+        "l2_id": "cs_complexity",
+        "l2_title_zh": "数据结构、算法与复杂度",
+        "evidence_zh": "优先 MR/CR/面试；无则：从标题与变更体量推断是否触及算法/边界类工作，不可见处标「—」并说明缺 diff。"
+      },
+      {
+        "l1_id": "technical_fundamentals",
+        "l1_title_zh": "基础技术能力",
+        "l2_id": "language_runtime",
+        "l2_title_zh": "语言深度与运行栈",
+        "evidence_zh": "从仓库技术栈（路径、扩展名、标题关键词如 TS/并发/内存）与持续提交模式写可见线索；深度结论须待 MR 或静态分析。"
+      },
+      {
+        "l1_id": "technical_fundamentals",
+        "l1_title_zh": "基础技术能力",
+        "l2_id": "data_storage",
+        "l2_title_zh": "数据与持久化",
+        "evidence_zh": "标题/路径是否出现迁移、事务、索引、ORM 等；无则 N/A（材料）+ 一句补证建议。"
+      },
+      {
+        "l1_id": "technical_fundamentals",
+        "l1_title_zh": "基础技术能力",
+        "l2_id": "design_tooling",
+        "l2_title_zh": "设计表达与工程化底座",
+        "evidence_zh": "构建/依赖/重构/模块化类标题与路径；可与 design_tooling、工程化目录变更交叉。"
+      },
+      {
+        "l1_id": "engineering_ability",
+        "l1_title_zh": "工程能力",
+        "l2_id": "structure_modularity",
+        "l2_title_zh": "结构、模块化与解耦",
+        "evidence_zh": "从路径分层、拆分/合并提交、子模块与 common 触碰写事实句；不等价架构评审。"
+      },
+      {
+        "l1_id": "engineering_ability",
+        "l1_title_zh": "工程能力",
+        "l2_id": "maintainability",
+        "l2_title_zh": "可维护性与演进",
+        "evidence_zh": "重构、清理、命名、Revert 链、文档类提交；须与具体 sha 标题挂钩。"
+      },
+      {
+        "l1_id": "engineering_ability",
+        "l1_title_zh": "工程能力",
+        "l2_id": "quality_gates",
+        "l2_title_zh": "规范与质量门禁",
+        "evidence_zh": "插件 commit_title_signals 弱代理 + 标题中 test/lint 等；缺 CI 结果则标材料缺口。"
+      },
+      {
+        "l1_id": "engineering_ability",
+        "l1_title_zh": "工程能力",
+        "l2_id": "cicd_release",
+        "l2_title_zh": "CI/CD 与发布",
+        "evidence_zh": "标题/路径中 CI、release、workflow 类 + commit_title_signals；可要求补 pipeline 链接。"
+      },
+      {
+        "l1_id": "engineering_ability",
+        "l1_title_zh": "工程能力",
+        "l2_id": "observability_debug",
+        "l2_title_zh": "可观测性与排障",
+        "evidence_zh": "日志/指标/trace 类标题 + commit_title_signals；无线上工单则置信度标低。"
+      },
+      {
+        "l1_id": "engineering_ability",
+        "l1_title_zh": "工程能力",
+        "l2_id": "vcs_footprint",
+        "l2_title_zh": "版本库活动与可追溯（Git 代理）",
+        "evidence_zh": "插件 delivery_traceability；与 title/web_url 完整度交叉。"
+      },
+      {
+        "l1_id": "system_design",
+        "l1_title_zh": "系统设计能力",
+        "l2_id": "architecture_boundaries",
+        "l2_title_zh": "架构与边界",
+        "evidence_zh": "path_taxonomy_proxy 为路径粗分 + commit 跨仓模式；须 disclaimer，重大结论待 MR/设计文档。"
+      },
+      {
+        "l1_id": "system_design",
+        "l1_title_zh": "系统设计能力",
+        "l2_id": "scale_reliability",
+        "l2_title_zh": "规模、并发与可用性",
+        "evidence_zh": "标题/路径中限流、容灾、多活、并发等关键词；无则 — 或 N/A（材料）。"
+      },
+      {
+        "l1_id": "system_design",
+        "l1_title_zh": "系统设计能力",
+        "l2_id": "data_platform_patterns",
+        "l2_title_zh": "数据路径与中间件",
+        "evidence_zh": "MQ/缓存/消费顺序等标题或配置路径线索；无则说明缺中间件变更样本。"
+      },
+      {
+        "l1_id": "system_design",
+        "l1_title_zh": "系统设计能力",
+        "l2_id": "state_consistency_cost",
+        "l2_title_zh": "状态、一致性与成本",
+        "evidence_zh": "状态机、补偿、费用、扩缩容相关标题；弱线索时标低置信。"
+      }
+    ]
+  },
+  "people": [
+    {
+      "display_zh": "林耕宇",
+      "person_key": "ericlin09.fgrd3@gmail.com",
+      "game_zh": "赛特2",
+      "primary_project_path_prefix": "h5_game_sh_tpe/seth2",
+      "evidence_gate": "sufficient",
+      "facts": {
+        "window_activity": {
+          "commit_rows": 882,
+          "insertions": 325373,
+          "deletions": 215256,
+          "distinct_projects": 13,
+          "first_day": "2026-03-02",
+          "last_day": "2026-05-12"
+        },
+        "commit_diff": {
+          "commit_diff_ok": 0,
+          "commit_diff_truncated_commits": 0,
+          "diff_path_suffix_top": []
+        },
+        "title_signal_commit_hits": {
+          "cicd": 0,
+          "observability": 22,
+          "quality_gate": 7,
+          "fix_like": 0,
+          "game_biz": 0,
+          "merge_like": 39
+        },
+        "path_taxonomy_buckets": {
+          "game_client_repo": 647,
+          "common_or_shared_stack": 191,
+          "art_or_asset_pipeline": 40,
+          "extension_tools": 4
+        },
+        "delivery_vcs_summed": {
+          "delivery_slices": 13,
+          "vcs_commit_count_summed": 882,
+          "vcs_active_days_summed": 133,
+          "vcs_max_lines_single_commit": 81560
+        },
+        "largest_commits_sample": [
+          {
+            "sha": "6589f571582735d5eb4e375007eef4576ffbca1e",
+            "project_path": "h5_game_sh_tpe/common/project-h-artcommon",
+            "title": "init proj",
+            "lines_changed": 81560,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/common/project-h-artcommon/-/commit/6589f571582735d5eb4e375007eef4576ffbca1e"
+          },
+          {
+            "sha": "49891da3a1dd0c1359a2de3fdf25b5b9007a8e40",
+            "project_path": "h5_game_sh_tpe/seth2/proj-h-client",
+            "title": "init proj",
+            "lines_changed": 71306,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/seth2/proj-h-client/-/commit/49891da3a1dd0c1359a2de3fdf25b5b9007a8e40"
+          },
+          {
+            "sha": "ba0c380b3effeb95a6218efee8f923f91e951c50",
+            "project_path": "h5_game_sh_tpe/seth2/proj-l-client",
+            "title": "更新: l10n 語言改為預設繁體中文",
+            "lines_changed": 66937,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/seth2/proj-l-client/-/commit/ba0c380b3effeb95a6218efee8f923f91e951c50"
+          },
+          {
+            "sha": "545eef6eb8ce2abb5894cf641a8a358ee1f67b41",
+            "project_path": "h5_game_sh_tpe/seth2/proj-l-client-artwork",
+            "title": "Merge branch 'master' of https://gitlab.fingergame.com/h5_game_sh_tpe/seth2/proj-l-client-artwork",
+            "lines_changed": 32122,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/seth2/proj-l-client-artwork/-/commit/545eef6eb8ce2abb5894cf641a8a358ee1f67b41"
+          },
+          {
+            "sha": "0a3cf1cd773f7668ad806852ac1a6bdcef6a681d",
+            "project_path": "h5_game_sh_tpe/extension-tools/common-ui/project-l",
+            "title": "移除: dev 相關代碼與資源",
+            "lines_changed": 25845,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/common-ui/project-l/-/commit/0a3cf1cd773f7668ad806852ac1a6bdcef6a681d"
+          }
+        ]
+      },
+      "mandatory_l2_scores": [
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "cs_complexity",
+          "l2_title_zh": "数据结构、算法与复杂度",
+          "evidence_zh": "优先 MR/CR/面试；无则：从标题与变更体量推断是否触及算法/边界类工作，不可见处标「—」并说明缺 diff。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "language_runtime",
+          "l2_title_zh": "语言深度与运行栈",
+          "evidence_zh": "从仓库技术栈（路径、扩展名、标题关键词如 TS/并发/内存）与持续提交模式写可见线索；深度结论须待 MR 或静态分析。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "data_storage",
+          "l2_title_zh": "数据与持久化",
+          "evidence_zh": "标题/路径是否出现迁移、事务、索引、ORM 等；无则 N/A（材料）+ 一句补证建议。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "design_tooling",
+          "l2_title_zh": "设计表达与工程化底座",
+          "evidence_zh": "构建/依赖/重构/模块化类标题与路径；可与 design_tooling、工程化目录变更交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "structure_modularity",
+          "l2_title_zh": "结构、模块化与解耦",
+          "evidence_zh": "从路径分层、拆分/合并提交、子模块与 common 触碰写事实句；不等价架构评审。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "maintainability",
+          "l2_title_zh": "可维护性与演进",
+          "evidence_zh": "重构、清理、命名、Revert 链、文档类提交；须与具体 sha 标题挂钩。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "quality_gates",
+          "l2_title_zh": "规范与质量门禁",
+          "evidence_zh": "插件 commit_title_signals 弱代理 + 标题中 test/lint 等；缺 CI 结果则标材料缺口。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "cicd_release",
+          "l2_title_zh": "CI/CD 与发布",
+          "evidence_zh": "标题/路径中 CI、release、workflow 类 + commit_title_signals；可要求补 pipeline 链接。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "observability_debug",
+          "l2_title_zh": "可观测性与排障",
+          "evidence_zh": "日志/指标/trace 类标题 + commit_title_signals；无线上工单则置信度标低。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "vcs_footprint",
+          "l2_title_zh": "版本库活动与可追溯（Git 代理）",
+          "evidence_zh": "插件 delivery_traceability；与 title/web_url 完整度交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "architecture_boundaries",
+          "l2_title_zh": "架构与边界",
+          "evidence_zh": "path_taxonomy_proxy 为路径粗分 + commit 跨仓模式；须 disclaimer，重大结论待 MR/设计文档。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "scale_reliability",
+          "l2_title_zh": "规模、并发与可用性",
+          "evidence_zh": "标题/路径中限流、容灾、多活、并发等关键词；无则 — 或 N/A（材料）。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "data_platform_patterns",
+          "l2_title_zh": "数据路径与中间件",
+          "evidence_zh": "MQ/缓存/消费顺序等标题或配置路径线索；无则说明缺中间件变更样本。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "state_consistency_cost",
+          "l2_title_zh": "状态、一致性与成本",
+          "evidence_zh": "状态机、补偿、费用、扩缩容相关标题；弱线索时标低置信。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        }
+      ]
+    },
+    {
+      "display_zh": "包峰華",
+      "person_key": "dpunity920000@gmail.com",
+      "game_zh": "大闹东海",
+      "primary_project_path_prefix": "h5_game_sh_tpe/da-nao-dong-hai",
+      "evidence_gate": "sufficient",
+      "facts": {
+        "window_activity": {
+          "commit_rows": 189,
+          "insertions": 10484812,
+          "deletions": 1856839,
+          "distinct_projects": 21,
+          "first_day": "2026-03-13",
+          "last_day": "2026-05-12"
+        },
+        "commit_diff": {
+          "commit_diff_ok": 0,
+          "commit_diff_truncated_commits": 0,
+          "diff_path_suffix_top": []
+        },
+        "title_signal_commit_hits": {
+          "cicd": 1,
+          "observability": 0,
+          "quality_gate": 1,
+          "fix_like": 1,
+          "game_biz": 0,
+          "merge_like": 8
+        },
+        "path_taxonomy_buckets": {
+          "game_client_repo": 88,
+          "common_or_shared_stack": 54,
+          "art_or_asset_pipeline": 47
+        },
+        "delivery_vcs_summed": {
+          "delivery_slices": 21,
+          "vcs_commit_count_summed": 189,
+          "vcs_active_days_summed": 67,
+          "vcs_max_lines_single_commit": 2672013
+        },
+        "largest_commits_sample": [
+          {
+            "sha": "a075c97ab6255f60e995e770989e43f08e566de9",
+            "project_path": "h5_game_sh_tpe/da-nao-dong-hai/proj-l-client",
+            "title": "init project",
+            "lines_changed": 2672013,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/da-nao-dong-hai/proj-l-client/-/commit/a075c97ab6255f60e995e770989e43f08e566de9"
+          },
+          {
+            "sha": "365fc9d2dd88bbded721c15519d280336c1c8c2e",
+            "project_path": "h5_game_sh_tpe/ma-jiang-hu-le/proj-l-client",
+            "title": "Init project",
+            "lines_changed": 1527554,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/ma-jiang-hu-le/proj-l-client/-/commit/365fc9d2dd88bbded721c15519d280336c1c8c2e"
+          },
+          {
+            "sha": "eceaa669ca6d65da8ab7c42b2faae809806556bf",
+            "project_path": "h5_game_sh_tpe/seth2/proj-h-client",
+            "title": "init project",
+            "lines_changed": 1514292,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/seth2/proj-h-client/-/commit/eceaa669ca6d65da8ab7c42b2faae809806556bf"
+          },
+          {
+            "sha": "4cec6d5d932fe159877ad8f2952ca0bc7b0c91fe",
+            "project_path": "h5_game_sh_tpe/extension-tools/common-ui/project-h",
+            "title": "init project",
+            "lines_changed": 1323528,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/common-ui/project-h/-/commit/4cec6d5d932fe159877ad8f2952ca0bc7b0c91fe"
+          },
+          {
+            "sha": "99735e0ad5d1321fb8c5e677659d48b835a1977c",
+            "project_path": "h5_game_sh_tpe/common/project-h-artcommon",
+            "title": "init project",
+            "lines_changed": 1257548,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/common/project-h-artcommon/-/commit/99735e0ad5d1321fb8c5e677659d48b835a1977c"
+          }
+        ]
+      },
+      "mandatory_l2_scores": [
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "cs_complexity",
+          "l2_title_zh": "数据结构、算法与复杂度",
+          "evidence_zh": "优先 MR/CR/面试；无则：从标题与变更体量推断是否触及算法/边界类工作，不可见处标「—」并说明缺 diff。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "language_runtime",
+          "l2_title_zh": "语言深度与运行栈",
+          "evidence_zh": "从仓库技术栈（路径、扩展名、标题关键词如 TS/并发/内存）与持续提交模式写可见线索；深度结论须待 MR 或静态分析。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "data_storage",
+          "l2_title_zh": "数据与持久化",
+          "evidence_zh": "标题/路径是否出现迁移、事务、索引、ORM 等；无则 N/A（材料）+ 一句补证建议。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "design_tooling",
+          "l2_title_zh": "设计表达与工程化底座",
+          "evidence_zh": "构建/依赖/重构/模块化类标题与路径；可与 design_tooling、工程化目录变更交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "structure_modularity",
+          "l2_title_zh": "结构、模块化与解耦",
+          "evidence_zh": "从路径分层、拆分/合并提交、子模块与 common 触碰写事实句；不等价架构评审。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "maintainability",
+          "l2_title_zh": "可维护性与演进",
+          "evidence_zh": "重构、清理、命名、Revert 链、文档类提交；须与具体 sha 标题挂钩。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "quality_gates",
+          "l2_title_zh": "规范与质量门禁",
+          "evidence_zh": "插件 commit_title_signals 弱代理 + 标题中 test/lint 等；缺 CI 结果则标材料缺口。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "cicd_release",
+          "l2_title_zh": "CI/CD 与发布",
+          "evidence_zh": "标题/路径中 CI、release、workflow 类 + commit_title_signals；可要求补 pipeline 链接。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "observability_debug",
+          "l2_title_zh": "可观测性与排障",
+          "evidence_zh": "日志/指标/trace 类标题 + commit_title_signals；无线上工单则置信度标低。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "vcs_footprint",
+          "l2_title_zh": "版本库活动与可追溯（Git 代理）",
+          "evidence_zh": "插件 delivery_traceability；与 title/web_url 完整度交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "architecture_boundaries",
+          "l2_title_zh": "架构与边界",
+          "evidence_zh": "path_taxonomy_proxy 为路径粗分 + commit 跨仓模式；须 disclaimer，重大结论待 MR/设计文档。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "scale_reliability",
+          "l2_title_zh": "规模、并发与可用性",
+          "evidence_zh": "标题/路径中限流、容灾、多活、并发等关键词；无则 — 或 N/A（材料）。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "data_platform_patterns",
+          "l2_title_zh": "数据路径与中间件",
+          "evidence_zh": "MQ/缓存/消费顺序等标题或配置路径线索；无则说明缺中间件变更样本。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "state_consistency_cost",
+          "l2_title_zh": "状态、一致性与成本",
+          "evidence_zh": "状态机、补偿、费用、扩缩容相关标题；弱线索时标低置信。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        }
+      ]
+    },
+    {
+      "display_zh": "李紳旭",
+      "person_key": "psunnysunq@gmail.com",
+      "game_zh": "喵財進寶",
+      "primary_project_path_prefix": "h5_game_sh_tpe/miao-cai-jin-bao",
+      "evidence_gate": "sufficient",
+      "facts": {
+        "window_activity": {
+          "commit_rows": 49,
+          "insertions": 251783,
+          "deletions": 28279,
+          "distinct_projects": 3,
+          "first_day": "2026-04-22",
+          "last_day": "2026-05-12"
+        },
+        "commit_diff": {
+          "commit_diff_ok": 0,
+          "commit_diff_truncated_commits": 0,
+          "diff_path_suffix_top": []
+        },
+        "title_signal_commit_hits": {
+          "cicd": 0,
+          "observability": 0,
+          "quality_gate": 0,
+          "fix_like": 0,
+          "game_biz": 0,
+          "merge_like": 4
+        },
+        "path_taxonomy_buckets": {
+          "art_or_asset_pipeline": 47,
+          "common_or_shared_stack": 2
+        },
+        "delivery_vcs_summed": {
+          "delivery_slices": 3,
+          "vcs_commit_count_summed": 49,
+          "vcs_active_days_summed": 18,
+          "vcs_max_lines_single_commit": 40129
+        },
+        "largest_commits_sample": [
+          {
+            "sha": "533ae61ab9a1f2f9b010fc5d9949009ff2b5bf05",
+            "project_path": "h5_game_sh_tpe/miao-cai-jin-bao/proj-l-client-artwork",
+            "title": "1x1~1x4連線框與消除框",
+            "lines_changed": 40129,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/miao-cai-jin-bao/proj-l-client-artwork/-/commit/533ae61ab9a1f2f9b010fc5d9949009ff2b5bf05"
+          },
+          {
+            "sha": "bd1b32577013b91182a6f4398d29c8e71f4038bb",
+            "project_path": "h5_game_sh_tpe/miao-cai-jin-bao/proj-l-client-artwork",
+            "title": "Merge branch 'feature/art' of https://gitlab.fingergame.com/h5_game_sh_tpe/miao-cai-jin-bao/proj-l-client-artwork into f",
+            "lines_changed": 36914,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/miao-cai-jin-bao/proj-l-client-artwork/-/commit/bd1b32577013b91182a6f4398d29c8e71f4038bb"
+          },
+          {
+            "sha": "aa8f03bef3de520fb7093b3261ae041301633a8c",
+            "project_path": "h5_game_sh_tpe/miao-cai-jin-bao/proj-l-client-artwork",
+            "title": "ng與fg背景動效",
+            "lines_changed": 21005,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/miao-cai-jin-bao/proj-l-client-artwork/-/commit/aa8f03bef3de520fb7093b3261ae041301633a8c"
+          },
+          {
+            "sha": "4b5e6f48f40814d7f6bb5b82d775ca0cbdc60c06",
+            "project_path": "h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client-artwork",
+            "title": "FG結算版動效",
+            "lines_changed": 19151,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client-artwork/-/commit/4b5e6f48f40814d7f6bb5b82d775ca0cbdc60c06"
+          },
+          {
+            "sha": "bc98b14579919b249cb911016b760af02acc8a44",
+            "project_path": "h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client-artwork",
+            "title": "FG宣告版動效",
+            "lines_changed": 18994,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client-artwork/-/commit/bc98b14579919b249cb911016b760af02acc8a44"
+          }
+        ]
+      },
+      "mandatory_l2_scores": [
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "cs_complexity",
+          "l2_title_zh": "数据结构、算法与复杂度",
+          "evidence_zh": "优先 MR/CR/面试；无则：从标题与变更体量推断是否触及算法/边界类工作，不可见处标「—」并说明缺 diff。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "language_runtime",
+          "l2_title_zh": "语言深度与运行栈",
+          "evidence_zh": "从仓库技术栈（路径、扩展名、标题关键词如 TS/并发/内存）与持续提交模式写可见线索；深度结论须待 MR 或静态分析。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "data_storage",
+          "l2_title_zh": "数据与持久化",
+          "evidence_zh": "标题/路径是否出现迁移、事务、索引、ORM 等；无则 N/A（材料）+ 一句补证建议。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "design_tooling",
+          "l2_title_zh": "设计表达与工程化底座",
+          "evidence_zh": "构建/依赖/重构/模块化类标题与路径；可与 design_tooling、工程化目录变更交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "structure_modularity",
+          "l2_title_zh": "结构、模块化与解耦",
+          "evidence_zh": "从路径分层、拆分/合并提交、子模块与 common 触碰写事实句；不等价架构评审。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "maintainability",
+          "l2_title_zh": "可维护性与演进",
+          "evidence_zh": "重构、清理、命名、Revert 链、文档类提交；须与具体 sha 标题挂钩。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "quality_gates",
+          "l2_title_zh": "规范与质量门禁",
+          "evidence_zh": "插件 commit_title_signals 弱代理 + 标题中 test/lint 等；缺 CI 结果则标材料缺口。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "cicd_release",
+          "l2_title_zh": "CI/CD 与发布",
+          "evidence_zh": "标题/路径中 CI、release、workflow 类 + commit_title_signals；可要求补 pipeline 链接。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "observability_debug",
+          "l2_title_zh": "可观测性与排障",
+          "evidence_zh": "日志/指标/trace 类标题 + commit_title_signals；无线上工单则置信度标低。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "vcs_footprint",
+          "l2_title_zh": "版本库活动与可追溯（Git 代理）",
+          "evidence_zh": "插件 delivery_traceability；与 title/web_url 完整度交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "architecture_boundaries",
+          "l2_title_zh": "架构与边界",
+          "evidence_zh": "path_taxonomy_proxy 为路径粗分 + commit 跨仓模式；须 disclaimer，重大结论待 MR/设计文档。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "scale_reliability",
+          "l2_title_zh": "规模、并发与可用性",
+          "evidence_zh": "标题/路径中限流、容灾、多活、并发等关键词；无则 — 或 N/A（材料）。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "data_platform_patterns",
+          "l2_title_zh": "数据路径与中间件",
+          "evidence_zh": "MQ/缓存/消费顺序等标题或配置路径线索；无则说明缺中间件变更样本。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "state_consistency_cost",
+          "l2_title_zh": "状态、一致性与成本",
+          "evidence_zh": "状态机、补偿、费用、扩缩容相关标题；弱线索时标低置信。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        }
+      ]
+    },
+    {
+      "display_zh": "蕭志文",
+      "person_key": "fg000406@fingergame.com.tw",
+      "game_zh": "麻將胡了",
+      "primary_project_path_prefix": "h5_game_sh_tpe/ma-jiang-hu-le",
+      "evidence_gate": "sufficient",
+      "facts": {
+        "window_activity": {
+          "commit_rows": 457,
+          "insertions": 501945,
+          "deletions": 1192727,
+          "distinct_projects": 5,
+          "first_day": "2026-03-02",
+          "last_day": "2026-05-12"
+        },
+        "commit_diff": {
+          "commit_diff_ok": 0,
+          "commit_diff_truncated_commits": 0,
+          "diff_path_suffix_top": []
+        },
+        "title_signal_commit_hits": {
+          "cicd": 1,
+          "observability": 4,
+          "quality_gate": 2,
+          "fix_like": 2,
+          "game_biz": 0,
+          "merge_like": 19
+        },
+        "path_taxonomy_buckets": {
+          "game_client_repo": 266,
+          "common_or_shared_stack": 135,
+          "art_or_asset_pipeline": 56
+        },
+        "delivery_vcs_summed": {
+          "delivery_slices": 5,
+          "vcs_commit_count_summed": 457,
+          "vcs_active_days_summed": 87,
+          "vcs_max_lines_single_commit": 733299
+        },
+        "largest_commits_sample": [
+          {
+            "sha": "9caea94ded4b1e2cd17ebea137aac69897bb10fe",
+            "project_path": "h5_game_sh_tpe/ma-jiang-hu-le/proj-l-client-artwork",
+            "title": "刪除: 移除暫代資源",
+            "lines_changed": 733299,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/ma-jiang-hu-le/proj-l-client-artwork/-/commit/9caea94ded4b1e2cd17ebea137aac69897bb10fe"
+          },
+          {
+            "sha": "be7166ef6d90ff0a378e05f18f54a597a8022fc5",
+            "project_path": "h5_game_sh_tpe/ma-jiang-hu-le/proj-l-client-artwork",
+            "title": "新增暫代資源",
+            "lines_changed": 89052,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/ma-jiang-hu-le/proj-l-client-artwork/-/commit/be7166ef6d90ff0a378e05f18f54a597a8022fc5"
+          },
+          {
+            "sha": "c3b59c4b38589dfed41f39836d725543170cc5b6",
+            "project_path": "h5_game_sh_tpe/extension-tools/common-ui/project-l",
+            "title": "Common UI 新增 BuyFeature 頁面",
+            "lines_changed": 87996,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/common-ui/project-l/-/commit/c3b59c4b38589dfed41f39836d725543170cc5b6"
+          },
+          {
+            "sha": "d17ea1c19b32810387a60080e174792387135a2b",
+            "project_path": "h5_game_sh_tpe/extension-tools/common-ui/project-l",
+            "title": "刪除: 舊的 mg common ui prefab",
+            "lines_changed": 62878,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/common-ui/project-l/-/commit/d17ea1c19b32810387a60080e174792387135a2b"
+          },
+          {
+            "sha": "a46e51d0fa71f992e0ae12e2d8c01ae6fdc9ed80",
+            "project_path": "h5_game_sh_tpe/ma-jiang-hu-le/proj-l-client",
+            "title": "更新: 多國語系 (zh-Hant)",
+            "lines_changed": 50737,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/ma-jiang-hu-le/proj-l-client/-/commit/a46e51d0fa71f992e0ae12e2d8c01ae6fdc9ed80"
+          }
+        ]
+      },
+      "mandatory_l2_scores": [
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "cs_complexity",
+          "l2_title_zh": "数据结构、算法与复杂度",
+          "evidence_zh": "优先 MR/CR/面试；无则：从标题与变更体量推断是否触及算法/边界类工作，不可见处标「—」并说明缺 diff。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "language_runtime",
+          "l2_title_zh": "语言深度与运行栈",
+          "evidence_zh": "从仓库技术栈（路径、扩展名、标题关键词如 TS/并发/内存）与持续提交模式写可见线索；深度结论须待 MR 或静态分析。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "data_storage",
+          "l2_title_zh": "数据与持久化",
+          "evidence_zh": "标题/路径是否出现迁移、事务、索引、ORM 等；无则 N/A（材料）+ 一句补证建议。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "design_tooling",
+          "l2_title_zh": "设计表达与工程化底座",
+          "evidence_zh": "构建/依赖/重构/模块化类标题与路径；可与 design_tooling、工程化目录变更交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "structure_modularity",
+          "l2_title_zh": "结构、模块化与解耦",
+          "evidence_zh": "从路径分层、拆分/合并提交、子模块与 common 触碰写事实句；不等价架构评审。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "maintainability",
+          "l2_title_zh": "可维护性与演进",
+          "evidence_zh": "重构、清理、命名、Revert 链、文档类提交；须与具体 sha 标题挂钩。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "quality_gates",
+          "l2_title_zh": "规范与质量门禁",
+          "evidence_zh": "插件 commit_title_signals 弱代理 + 标题中 test/lint 等；缺 CI 结果则标材料缺口。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "cicd_release",
+          "l2_title_zh": "CI/CD 与发布",
+          "evidence_zh": "标题/路径中 CI、release、workflow 类 + commit_title_signals；可要求补 pipeline 链接。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "observability_debug",
+          "l2_title_zh": "可观测性与排障",
+          "evidence_zh": "日志/指标/trace 类标题 + commit_title_signals；无线上工单则置信度标低。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "vcs_footprint",
+          "l2_title_zh": "版本库活动与可追溯（Git 代理）",
+          "evidence_zh": "插件 delivery_traceability；与 title/web_url 完整度交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "architecture_boundaries",
+          "l2_title_zh": "架构与边界",
+          "evidence_zh": "path_taxonomy_proxy 为路径粗分 + commit 跨仓模式；须 disclaimer，重大结论待 MR/设计文档。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "scale_reliability",
+          "l2_title_zh": "规模、并发与可用性",
+          "evidence_zh": "标题/路径中限流、容灾、多活、并发等关键词；无则 — 或 N/A（材料）。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "data_platform_patterns",
+          "l2_title_zh": "数据路径与中间件",
+          "evidence_zh": "MQ/缓存/消费顺序等标题或配置路径线索；无则说明缺中间件变更样本。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "state_consistency_cost",
+          "l2_title_zh": "状态、一致性与成本",
+          "evidence_zh": "状态机、补偿、费用、扩缩容相关标题；弱线索时标低置信。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        }
+      ]
+    },
+    {
+      "display_zh": "李育瑋",
+      "person_key": "pd36579@gmail.com",
+      "game_zh": "仙境傳說",
+      "primary_project_path_prefix": "h5_game_sh_tpe/xian-jing-chuan-shuo",
+      "evidence_gate": "sufficient",
+      "facts": {
+        "window_activity": {
+          "commit_rows": 185,
+          "insertions": 527062,
+          "deletions": 254304,
+          "distinct_projects": 10,
+          "first_day": "2026-03-03",
+          "last_day": "2026-05-12"
+        },
+        "commit_diff": {
+          "commit_diff_ok": 0,
+          "commit_diff_truncated_commits": 0,
+          "diff_path_suffix_top": []
+        },
+        "title_signal_commit_hits": {
+          "cicd": 0,
+          "observability": 0,
+          "quality_gate": 0,
+          "fix_like": 0,
+          "game_biz": 0,
+          "merge_like": 8
+        },
+        "path_taxonomy_buckets": {
+          "art_or_asset_pipeline": 147,
+          "common_or_shared_stack": 38
+        },
+        "delivery_vcs_summed": {
+          "delivery_slices": 10,
+          "vcs_commit_count_summed": 185,
+          "vcs_active_days_summed": 76,
+          "vcs_max_lines_single_commit": 83264
+        },
+        "largest_commits_sample": [
+          {
+            "sha": "392c6cbd1a0ef898a41f566cf10f658f7054e350",
+            "project_path": "h5_game_sh_tpe/extension-tools/common-ui/project-h",
+            "title": "H線共用UI直橫版",
+            "lines_changed": 83264,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/common-ui/project-h/-/commit/392c6cbd1a0ef898a41f566cf10f658f7054e350"
+          },
+          {
+            "sha": "ffae61d438e1a1fd07d3d729b2c31c99fea5fbbe",
+            "project_path": "h5_game_sh_tpe/common/project-l-artcommon",
+            "title": "大報獎板：第1、2、4階美術資源上傳",
+            "lines_changed": 63601,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/common/project-l-artcommon/-/commit/ffae61d438e1a1fd07d3d729b2c31c99fea5fbbe"
+          },
+          {
+            "sha": "fe0038aab643adc45b4d839119a54d50dd749489",
+            "project_path": "h5_game_sh_tpe/seth2/proj-h-client-artwork",
+            "title": "Merge branch 'master' of https://gitlab.fingergame.com/h5_game_sh_tpe/seth2/proj-h-client-artwork",
+            "lines_changed": 59321,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/seth2/proj-h-client-artwork/-/commit/fe0038aab643adc45b4d839119a54d50dd749489"
+          },
+          {
+            "sha": "e9341e2d4474644814ccde28c4c2ed54a0b39cf6",
+            "project_path": "h5_game_sh_tpe/seth2/proj-h-client-artwork",
+            "title": "大獎預告更新成閃電星空版",
+            "lines_changed": 43548,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/seth2/proj-h-client-artwork/-/commit/e9341e2d4474644814ccde28c4c2ed54a0b39cf6"
+          },
+          {
+            "sha": "9d727d9125add9e1a4d65766f5eb31198d863a46",
+            "project_path": "h5_game_sh_tpe/extension-tools/common-ui/project-l",
+            "title": "橫版預排、部分舊資源路徑替換",
+            "lines_changed": 39110,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/common-ui/project-l/-/commit/9d727d9125add9e1a4d65766f5eb31198d863a46"
+          }
+        ]
+      },
+      "mandatory_l2_scores": [
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "cs_complexity",
+          "l2_title_zh": "数据结构、算法与复杂度",
+          "evidence_zh": "优先 MR/CR/面试；无则：从标题与变更体量推断是否触及算法/边界类工作，不可见处标「—」并说明缺 diff。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "language_runtime",
+          "l2_title_zh": "语言深度与运行栈",
+          "evidence_zh": "从仓库技术栈（路径、扩展名、标题关键词如 TS/并发/内存）与持续提交模式写可见线索；深度结论须待 MR 或静态分析。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "data_storage",
+          "l2_title_zh": "数据与持久化",
+          "evidence_zh": "标题/路径是否出现迁移、事务、索引、ORM 等；无则 N/A（材料）+ 一句补证建议。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "design_tooling",
+          "l2_title_zh": "设计表达与工程化底座",
+          "evidence_zh": "构建/依赖/重构/模块化类标题与路径；可与 design_tooling、工程化目录变更交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "structure_modularity",
+          "l2_title_zh": "结构、模块化与解耦",
+          "evidence_zh": "从路径分层、拆分/合并提交、子模块与 common 触碰写事实句；不等价架构评审。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "maintainability",
+          "l2_title_zh": "可维护性与演进",
+          "evidence_zh": "重构、清理、命名、Revert 链、文档类提交；须与具体 sha 标题挂钩。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "quality_gates",
+          "l2_title_zh": "规范与质量门禁",
+          "evidence_zh": "插件 commit_title_signals 弱代理 + 标题中 test/lint 等；缺 CI 结果则标材料缺口。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "cicd_release",
+          "l2_title_zh": "CI/CD 与发布",
+          "evidence_zh": "标题/路径中 CI、release、workflow 类 + commit_title_signals；可要求补 pipeline 链接。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "observability_debug",
+          "l2_title_zh": "可观测性与排障",
+          "evidence_zh": "日志/指标/trace 类标题 + commit_title_signals；无线上工单则置信度标低。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "vcs_footprint",
+          "l2_title_zh": "版本库活动与可追溯（Git 代理）",
+          "evidence_zh": "插件 delivery_traceability；与 title/web_url 完整度交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "architecture_boundaries",
+          "l2_title_zh": "架构与边界",
+          "evidence_zh": "path_taxonomy_proxy 为路径粗分 + commit 跨仓模式；须 disclaimer，重大结论待 MR/设计文档。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "scale_reliability",
+          "l2_title_zh": "规模、并发与可用性",
+          "evidence_zh": "标题/路径中限流、容灾、多活、并发等关键词；无则 — 或 N/A（材料）。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "data_platform_patterns",
+          "l2_title_zh": "数据路径与中间件",
+          "evidence_zh": "MQ/缓存/消费顺序等标题或配置路径线索；无则说明缺中间件变更样本。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "state_consistency_cost",
+          "l2_title_zh": "状态、一致性与成本",
+          "evidence_zh": "状态机、补偿、费用、扩缩容相关标题；弱线索时标低置信。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        }
+      ]
+    },
+    {
+      "display_zh": "蔡政廷",
+      "person_key": "jackal0807@hotmail.com",
+      "game_zh": "雷神之錘",
+      "primary_project_path_prefix": "h5_game_sh_tpe/lei-shen-zhi-chui",
+      "evidence_gate": "sufficient",
+      "facts": {
+        "window_activity": {
+          "commit_rows": 55,
+          "insertions": 59228,
+          "deletions": 33520,
+          "distinct_projects": 5,
+          "first_day": "2026-04-07",
+          "last_day": "2026-05-12"
+        },
+        "commit_diff": {
+          "commit_diff_ok": 0,
+          "commit_diff_truncated_commits": 0,
+          "diff_path_suffix_top": []
+        },
+        "title_signal_commit_hits": {
+          "cicd": 13,
+          "observability": 0,
+          "quality_gate": 1,
+          "fix_like": 0,
+          "game_biz": 0,
+          "merge_like": 1
+        },
+        "path_taxonomy_buckets": {
+          "game_client_repo": 51,
+          "art_or_asset_pipeline": 4
+        },
+        "delivery_vcs_summed": {
+          "delivery_slices": 5,
+          "vcs_commit_count_summed": 55,
+          "vcs_active_days_summed": 18,
+          "vcs_max_lines_single_commit": 25371
+        },
+        "largest_commits_sample": [
+          {
+            "sha": "52e511588e431773c82b8fe4e14c6113d378bfbf",
+            "project_path": "h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client",
+            "title": "更新：語系",
+            "lines_changed": 25371,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client/-/commit/52e511588e431773c82b8fe4e14c6113d378bfbf"
+          },
+          {
+            "sha": "ed98304808ae59d5d9c7a095cfc1e1672852fea8",
+            "project_path": "h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client-artwork",
+            "title": "新增：maingame prefab 暫代",
+            "lines_changed": 25132,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client-artwork/-/commit/ed98304808ae59d5d9c7a095cfc1e1672852fea8"
+          },
+          {
+            "sha": "0005b8ff9a3b6dfc80ded5d7a2ad78b8a1b985d1",
+            "project_path": "h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client-artwork",
+            "title": "新增：dev_tool prefab",
+            "lines_changed": 21995,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client-artwork/-/commit/0005b8ff9a3b6dfc80ded5d7a2ad78b8a1b985d1"
+          },
+          {
+            "sha": "bd909678db37923a47c6d7f6141033b23de8d82e",
+            "project_path": "h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client-artwork",
+            "title": "新增： Symbol prefab",
+            "lines_changed": 7196,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client-artwork/-/commit/bd909678db37923a47c6d7f6141033b23de8d82e"
+          },
+          {
+            "sha": "334a50beec32ea841d25eee475415a61f0919f2b",
+            "project_path": "h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client",
+            "title": "更新: 規則頁相關檔案",
+            "lines_changed": 5307,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/lei-shen-zhi-chui/proj-l-client/-/commit/334a50beec32ea841d25eee475415a61f0919f2b"
+          }
+        ]
+      },
+      "mandatory_l2_scores": [
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "cs_complexity",
+          "l2_title_zh": "数据结构、算法与复杂度",
+          "evidence_zh": "优先 MR/CR/面试；无则：从标题与变更体量推断是否触及算法/边界类工作，不可见处标「—」并说明缺 diff。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "language_runtime",
+          "l2_title_zh": "语言深度与运行栈",
+          "evidence_zh": "从仓库技术栈（路径、扩展名、标题关键词如 TS/并发/内存）与持续提交模式写可见线索；深度结论须待 MR 或静态分析。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "data_storage",
+          "l2_title_zh": "数据与持久化",
+          "evidence_zh": "标题/路径是否出现迁移、事务、索引、ORM 等；无则 N/A（材料）+ 一句补证建议。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "design_tooling",
+          "l2_title_zh": "设计表达与工程化底座",
+          "evidence_zh": "构建/依赖/重构/模块化类标题与路径；可与 design_tooling、工程化目录变更交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "structure_modularity",
+          "l2_title_zh": "结构、模块化与解耦",
+          "evidence_zh": "从路径分层、拆分/合并提交、子模块与 common 触碰写事实句；不等价架构评审。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "maintainability",
+          "l2_title_zh": "可维护性与演进",
+          "evidence_zh": "重构、清理、命名、Revert 链、文档类提交；须与具体 sha 标题挂钩。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "quality_gates",
+          "l2_title_zh": "规范与质量门禁",
+          "evidence_zh": "插件 commit_title_signals 弱代理 + 标题中 test/lint 等；缺 CI 结果则标材料缺口。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "cicd_release",
+          "l2_title_zh": "CI/CD 与发布",
+          "evidence_zh": "标题/路径中 CI、release、workflow 类 + commit_title_signals；可要求补 pipeline 链接。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "observability_debug",
+          "l2_title_zh": "可观测性与排障",
+          "evidence_zh": "日志/指标/trace 类标题 + commit_title_signals；无线上工单则置信度标低。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "vcs_footprint",
+          "l2_title_zh": "版本库活动与可追溯（Git 代理）",
+          "evidence_zh": "插件 delivery_traceability；与 title/web_url 完整度交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "architecture_boundaries",
+          "l2_title_zh": "架构与边界",
+          "evidence_zh": "path_taxonomy_proxy 为路径粗分 + commit 跨仓模式；须 disclaimer，重大结论待 MR/设计文档。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "scale_reliability",
+          "l2_title_zh": "规模、并发与可用性",
+          "evidence_zh": "标题/路径中限流、容灾、多活、并发等关键词；无则 — 或 N/A（材料）。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "data_platform_patterns",
+          "l2_title_zh": "数据路径与中间件",
+          "evidence_zh": "MQ/缓存/消费顺序等标题或配置路径线索；无则说明缺中间件变更样本。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "state_consistency_cost",
+          "l2_title_zh": "状态、一致性与成本",
+          "evidence_zh": "状态机、补偿、费用、扩缩容相关标题；弱线索时标低置信。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        }
+      ]
+    },
+    {
+      "display_zh": "于振宇",
+      "person_key": "1806153872@qq.com",
+      "game_zh": "（跨仓 / 工具）",
+      "primary_project_path_prefix": null,
+      "evidence_gate": "partial",
+      "facts": {
+        "window_activity": {
+          "commit_rows": 11,
+          "insertions": 8860,
+          "deletions": 417,
+          "distinct_projects": 3,
+          "first_day": "2026-04-30",
+          "last_day": "2026-05-12"
+        },
+        "commit_diff": {
+          "commit_diff_ok": 0,
+          "commit_diff_truncated_commits": 0,
+          "diff_path_suffix_top": []
+        },
+        "title_signal_commit_hits": {
+          "cicd": 0,
+          "observability": 4,
+          "quality_gate": 1,
+          "fix_like": 3,
+          "game_biz": 0,
+          "merge_like": 0
+        },
+        "path_taxonomy_buckets": {
+          "extension_tools": 7,
+          "common_or_shared_stack": 4
+        },
+        "delivery_vcs_summed": {
+          "delivery_slices": 3,
+          "vcs_commit_count_summed": 11,
+          "vcs_active_days_summed": 5,
+          "vcs_max_lines_single_commit": 4339
+        },
+        "largest_commits_sample": [
+          {
+            "sha": "78488834569bd3df3f15cc9480d76ca1f890a78e",
+            "project_path": "h5_game_sh_tpe/extension-tools/genbot",
+            "title": "feat(v0.2): Cocos editor integration + Inspector-driven bind config UI",
+            "lines_changed": 4339,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/genbot/-/commit/78488834569bd3df3f15cc9480d76ca1f890a78e"
+          },
+          {
+            "sha": "8070b3de52f8a4969e943e5fd908baa23a2ca356",
+            "project_path": "h5_game_sh_tpe/extension-tools/genbot",
+            "title": "docs: 引入 framework 级文档目录 + 镜像 anim 设计文档",
+            "lines_changed": 2204,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/genbot/-/commit/8070b3de52f8a4969e943e5fd908baa23a2ca356"
+          },
+          {
+            "sha": "e2d65510744f8ddb60f2656782616b5066e0610d",
+            "project_path": "h5_game_sh_tpe/extension-tools/genbot",
+            "title": "feat: v0.1 CLI MVP for prefab -> PrefabView code generation",
+            "lines_changed": 1700,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/genbot/-/commit/e2d65510744f8ddb60f2656782616b5066e0610d"
+          },
+          {
+            "sha": "666bae3235c6b4cfd7b9360187275d12babf47a4",
+            "project_path": "h5_game_sh_tpe/extension-tools/genbot",
+            "title": "feat(view-ts): split gen.ts/view.ts; auto onClick hooks; Button-only triggers",
+            "lines_changed": 611,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/genbot/-/commit/666bae3235c6b4cfd7b9360187275d12babf47a4"
+          },
+          {
+            "sha": "eaa3152a43bad0eff8ad76a9afdcf67b86133f91",
+            "project_path": "h5_game_sh_tpe/extension-tools/genbot",
+            "title": "feat(default-rule): export only Button nodes by default",
+            "lines_changed": 282,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/extension-tools/genbot/-/commit/eaa3152a43bad0eff8ad76a9afdcf67b86133f91"
+          }
+        ]
+      },
+      "mandatory_l2_scores": [
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "cs_complexity",
+          "l2_title_zh": "数据结构、算法与复杂度",
+          "evidence_zh": "优先 MR/CR/面试；无则：从标题与变更体量推断是否触及算法/边界类工作，不可见处标「—」并说明缺 diff。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "language_runtime",
+          "l2_title_zh": "语言深度与运行栈",
+          "evidence_zh": "从仓库技术栈（路径、扩展名、标题关键词如 TS/并发/内存）与持续提交模式写可见线索；深度结论须待 MR 或静态分析。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "data_storage",
+          "l2_title_zh": "数据与持久化",
+          "evidence_zh": "标题/路径是否出现迁移、事务、索引、ORM 等；无则 N/A（材料）+ 一句补证建议。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "design_tooling",
+          "l2_title_zh": "设计表达与工程化底座",
+          "evidence_zh": "构建/依赖/重构/模块化类标题与路径；可与 design_tooling、工程化目录变更交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "structure_modularity",
+          "l2_title_zh": "结构、模块化与解耦",
+          "evidence_zh": "从路径分层、拆分/合并提交、子模块与 common 触碰写事实句；不等价架构评审。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "maintainability",
+          "l2_title_zh": "可维护性与演进",
+          "evidence_zh": "重构、清理、命名、Revert 链、文档类提交；须与具体 sha 标题挂钩。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "quality_gates",
+          "l2_title_zh": "规范与质量门禁",
+          "evidence_zh": "插件 commit_title_signals 弱代理 + 标题中 test/lint 等；缺 CI 结果则标材料缺口。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "cicd_release",
+          "l2_title_zh": "CI/CD 与发布",
+          "evidence_zh": "标题/路径中 CI、release、workflow 类 + commit_title_signals；可要求补 pipeline 链接。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "observability_debug",
+          "l2_title_zh": "可观测性与排障",
+          "evidence_zh": "日志/指标/trace 类标题 + commit_title_signals；无线上工单则置信度标低。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "vcs_footprint",
+          "l2_title_zh": "版本库活动与可追溯（Git 代理）",
+          "evidence_zh": "插件 delivery_traceability；与 title/web_url 完整度交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "architecture_boundaries",
+          "l2_title_zh": "架构与边界",
+          "evidence_zh": "path_taxonomy_proxy 为路径粗分 + commit 跨仓模式；须 disclaimer，重大结论待 MR/设计文档。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "scale_reliability",
+          "l2_title_zh": "规模、并发与可用性",
+          "evidence_zh": "标题/路径中限流、容灾、多活、并发等关键词；无则 — 或 N/A（材料）。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "data_platform_patterns",
+          "l2_title_zh": "数据路径与中间件",
+          "evidence_zh": "MQ/缓存/消费顺序等标题或配置路径线索；无则说明缺中间件变更样本。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "state_consistency_cost",
+          "l2_title_zh": "状态、一致性与成本",
+          "evidence_zh": "状态机、补偿、费用、扩缩容相关标题；弱线索时标低置信。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        }
+      ]
+    },
+    {
+      "display_zh": "秦超",
+      "person_key": "932493926@qq.com",
+      "game_zh": "（公共 / 协议）",
+      "primary_project_path_prefix": null,
+      "evidence_gate": "partial",
+      "facts": {
+        "window_activity": {
+          "commit_rows": 2,
+          "insertions": 68,
+          "deletions": 6,
+          "distinct_projects": 1,
+          "first_day": "2026-05-07",
+          "last_day": "2026-05-07"
+        },
+        "commit_diff": {
+          "commit_diff_ok": 0,
+          "commit_diff_truncated_commits": 0,
+          "diff_path_suffix_top": []
+        },
+        "title_signal_commit_hits": {
+          "cicd": 0,
+          "observability": 2,
+          "quality_gate": 0,
+          "fix_like": 0,
+          "game_biz": 0,
+          "merge_like": 0
+        },
+        "path_taxonomy_buckets": {
+          "common_or_shared_stack": 2
+        },
+        "delivery_vcs_summed": {
+          "delivery_slices": 1,
+          "vcs_commit_count_summed": 2,
+          "vcs_active_days_summed": 1,
+          "vcs_max_lines_single_commit": 61
+        },
+        "largest_commits_sample": [
+          {
+            "sha": "77017cf6ee1646f0eb2d3019635bba8f446b25c9",
+            "project_path": "h5_game_sh_tpe/common/project-l-common",
+            "title": "添加协议打印日志",
+            "lines_changed": 61,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/common/project-l-common/-/commit/77017cf6ee1646f0eb2d3019635bba8f446b25c9"
+          },
+          {
+            "sha": "358212b4a33b601b0f0133220229e01411b9033d",
+            "project_path": "h5_game_sh_tpe/common/project-l-common",
+            "title": "添加协议调试日志，可开关",
+            "lines_changed": 13,
+            "web_url": "https://gitlab.fingergame.com/h5_game_sh_tpe/common/project-l-common/-/commit/358212b4a33b601b0f0133220229e01411b9033d"
+          }
+        ]
+      },
+      "mandatory_l2_scores": [
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "cs_complexity",
+          "l2_title_zh": "数据结构、算法与复杂度",
+          "evidence_zh": "优先 MR/CR/面试；无则：从标题与变更体量推断是否触及算法/边界类工作，不可见处标「—」并说明缺 diff。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "language_runtime",
+          "l2_title_zh": "语言深度与运行栈",
+          "evidence_zh": "从仓库技术栈（路径、扩展名、标题关键词如 TS/并发/内存）与持续提交模式写可见线索；深度结论须待 MR 或静态分析。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "data_storage",
+          "l2_title_zh": "数据与持久化",
+          "evidence_zh": "标题/路径是否出现迁移、事务、索引、ORM 等；无则 N/A（材料）+ 一句补证建议。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "technical_fundamentals",
+          "l1_title_zh": "基础技术能力",
+          "l2_id": "design_tooling",
+          "l2_title_zh": "设计表达与工程化底座",
+          "evidence_zh": "构建/依赖/重构/模块化类标题与路径；可与 design_tooling、工程化目录变更交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "structure_modularity",
+          "l2_title_zh": "结构、模块化与解耦",
+          "evidence_zh": "从路径分层、拆分/合并提交、子模块与 common 触碰写事实句；不等价架构评审。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "maintainability",
+          "l2_title_zh": "可维护性与演进",
+          "evidence_zh": "重构、清理、命名、Revert 链、文档类提交；须与具体 sha 标题挂钩。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "quality_gates",
+          "l2_title_zh": "规范与质量门禁",
+          "evidence_zh": "插件 commit_title_signals 弱代理 + 标题中 test/lint 等；缺 CI 结果则标材料缺口。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "cicd_release",
+          "l2_title_zh": "CI/CD 与发布",
+          "evidence_zh": "标题/路径中 CI、release、workflow 类 + commit_title_signals；可要求补 pipeline 链接。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "observability_debug",
+          "l2_title_zh": "可观测性与排障",
+          "evidence_zh": "日志/指标/trace 类标题 + commit_title_signals；无线上工单则置信度标低。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "engineering_ability",
+          "l1_title_zh": "工程能力",
+          "l2_id": "vcs_footprint",
+          "l2_title_zh": "版本库活动与可追溯（Git 代理）",
+          "evidence_zh": "插件 delivery_traceability；与 title/web_url 完整度交叉。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "architecture_boundaries",
+          "l2_title_zh": "架构与边界",
+          "evidence_zh": "path_taxonomy_proxy 为路径粗分 + commit 跨仓模式；须 disclaimer，重大结论待 MR/设计文档。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "scale_reliability",
+          "l2_title_zh": "规模、并发与可用性",
+          "evidence_zh": "标题/路径中限流、容灾、多活、并发等关键词；无则 — 或 N/A（材料）。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "data_platform_patterns",
+          "l2_title_zh": "数据路径与中间件",
+          "evidence_zh": "MQ/缓存/消费顺序等标题或配置路径线索；无则说明缺中间件变更样本。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        },
+        {
+          "l1_id": "system_design",
+          "l1_title_zh": "系统设计能力",
+          "l2_id": "state_consistency_cost",
+          "l2_title_zh": "状态、一致性与成本",
+          "evidence_zh": "状态机、补偿、费用、扩缩容相关标题；弱线索时标低置信。",
+          "grade": null,
+          "confidence": null,
+          "narrative_zh": null,
+          "filled_by": null,
+          "filled_at": null,
+          "inherited_from_run_id": null
+        }
+      ]
+    }
+  ]
+}

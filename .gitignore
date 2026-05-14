@@ -1,6 +1,13 @@
+.env
 out/
 __pycache__/
 *.pyc
 .venv/
 app_data/
 *.egg-info/
+org_contributor_pipeline/artifacts/generated/**
+!org_contributor_pipeline/artifacts/generated/README.md
+!org_contributor_pipeline/artifacts/generated/demo_pipeline_input.json
+org_contributor_pipeline/artifacts/reports/**
+!org_contributor_pipeline/artifacts/reports/README.md
+.secrets/gitlab_token

@@ -1,0 +1,263 @@
+{
+  "schema_version": 3,
+  "title": "程序员能力考核 — 两级维度（参考精神、可落地版）",
+  "notes_zh": "与老板口述的八大方向对齐，但不逐字等价：L2 已合并、收束，便于后续按插件/MR/面试逐项填证据；Git 与静态分析只能覆盖少数代理信号，须标注置信度。必审三大 L1（基础技术能力、工程能力、系统设计能力）的证据口径与阶段输出要求见同目录 review_framework.json（非仅靠插件）。",
+  "level1": [
+    {
+      "id": "technical_fundamentals",
+      "title_zh": "基础技术能力",
+      "title_en": "Technical Fundamentals",
+      "spirit_zh": "硬实力：不止会调 API，能讲清原理、trade-off 与 root cause。",
+      "observation_zh": "复杂度与正确性、语言与运行栈、数据与并发、是否能量化风险。",
+      "level2": [
+        {
+          "id": "cs_complexity",
+          "title_zh": "数据结构、算法与复杂度",
+          "title_en": "CS & complexity",
+          "observable_zh": "关键路径上的选型、边界分析、CR/面试中的讨论。"
+        },
+        {
+          "id": "language_runtime",
+          "title_zh": "语言深度与运行栈",
+          "title_en": "Language & runtime",
+          "observable_zh": "语言特性、内存/生命周期、OS/网络/并发与排障链（可合并举证）。"
+        },
+        {
+          "id": "data_storage",
+          "title_zh": "数据与持久化",
+          "title_en": "Data & storage",
+          "observable_zh": "模型、事务、索引、迁移与一致性取舍。"
+        },
+        {
+          "id": "design_tooling",
+          "title_zh": "设计表达与工程化底座",
+          "title_en": "Design & tooling",
+          "observable_zh": "设计模式是否服务可读性/演进；构建、依赖、环境可复现。"
+        }
+      ]
+    },
+    {
+      "id": "engineering_ability",
+      "title_zh": "工程能力",
+      "title_en": "Engineering Ability",
+      "spirit_zh": "能跑不够：可维护、可交接、线上可查——高级工程师常在这里拉开差距。",
+      "boss_focus_zh": "半年后好不好改、新人好不好接、崩了好不好查。",
+      "level2": [
+        {
+          "id": "structure_modularity",
+          "title_zh": "结构、模块化与解耦",
+          "title_en": "Structure & modularity",
+          "observable_zh": "分层、边界、依赖方向、扩展点与循环依赖治理。"
+        },
+        {
+          "id": "maintainability",
+          "title_zh": "可维护性与演进",
+          "title_en": "Maintainability",
+          "observable_zh": "重构节奏、技术债显式化、修改成本与阅读成本。"
+        },
+        {
+          "id": "quality_gates",
+          "title_zh": "规范与质量门禁",
+          "title_en": "Quality gates",
+          "observable_zh": "Lint/风格/分支规范、单测与关键路径覆盖趋势。"
+        },
+        {
+          "id": "cicd_release",
+          "title_zh": "CI/CD 与发布",
+          "title_en": "CI/CD",
+          "observable_zh": "流水线稳定性、门禁、发布/回滚节奏。"
+        },
+        {
+          "id": "observability_debug",
+          "title_zh": "可观测性与排障",
+          "title_en": "Observability & debug",
+          "observable_zh": "日志/指标/追踪、线上定位链、最小复现与工具化。"
+        },
+        {
+          "id": "vcs_footprint",
+          "title_zh": "版本库活动与可追溯（Git 代理）",
+          "title_en": "VCS footprint (proxy)",
+          "observable_zh": "来自 commit：频率、活跃日、title/web_url、变更体量；须与 CR/MR 交叉，不等价工程能力。",
+          "plugin_note": "由插件 delivery_traceability 写入指标。"
+        }
+      ]
+    },
+    {
+      "id": "system_design",
+      "title_zh": "系统设计能力",
+      "title_en": "System Design",
+      "spirit_zh": "越高级越重：能取舍、控复杂度与成本，而不是堆组件。",
+      "observation_zh": "何时不该上某技术；故障域、一致性、成本是否入脑。",
+      "level2": [
+        {
+          "id": "architecture_boundaries",
+          "title_zh": "架构与边界",
+          "title_en": "Architecture",
+          "observable_zh": "分层、服务/模块边界、契约、失败隔离与演进路线。"
+        },
+        {
+          "id": "scale_reliability",
+          "title_zh": "规模、并发与可用性",
+          "title_en": "Scale & reliability",
+          "observable_zh": "容量、限流、降级、多活/容灾目标与验证。"
+        },
+        {
+          "id": "data_platform_patterns",
+          "title_zh": "数据路径与中间件",
+          "title_en": "Data path & middleware",
+          "observable_zh": "缓存/MQ、顺序与重复消费、一致性与补偿。"
+        },
+        {
+          "id": "state_consistency_cost",
+          "title_zh": "状态、一致性与成本",
+          "title_en": "State, consistency & cost",
+          "observable_zh": "状态管理策略、一致性级别、扩缩容与费用意识。"
+        }
+      ]
+    },
+    {
+      "id": "business_understanding",
+      "title_zh": "业务理解能力",
+      "title_en": "Business Understanding",
+      "spirit_zh": "技术为业务服务：会问「为什么做、有无更省方案、是否动核心指标」。",
+      "boss_focus_zh": "游戏场景下能对齐留存、付费、转化、运营、风险、投放等语境。",
+      "level2": [
+        {
+          "id": "goals_users",
+          "title_zh": "目标与用户",
+          "title_en": "Goals & users",
+          "observable_zh": "需求反讲、用户路径、体验取舍与数据反馈闭环。"
+        },
+        {
+          "id": "roi_tradeoffs",
+          "title_zh": "ROI 与方案取舍",
+          "title_en": "ROI & tradeoffs",
+          "observable_zh": "成本、排期、风险与收益的显式比较与记录。"
+        },
+        {
+          "id": "game_context",
+          "title_zh": "游戏业务语境",
+          "title_en": "Game context",
+          "observable_zh": "方案/排期与核心指标、活动或运营目标的关联表述。"
+        }
+      ]
+    },
+    {
+      "id": "problem_solving",
+      "title_zh": "问题解决能力",
+      "title_en": "Problem Solving",
+      "spirit_zh": "未知问题下的镇定、拆解与定位速度，比「背题」更值钱。",
+      "level2": [
+        {
+          "id": "triage_throughput",
+          "title_zh": "排查与闭环效率",
+          "title_en": "Triage throughput",
+          "observable_zh": "问题关闭时长、复盘、回归与验证链。"
+        },
+        {
+          "id": "decomposition_rca",
+          "title_zh": "拆解与根因",
+          "title_en": "Decomposition & RCA",
+          "observable_zh": "子问题树、假设顺序、证据链与最小复现。"
+        },
+        {
+          "id": "methodology_under_fire",
+          "title_zh": "方法论与压力下处理",
+          "title_en": "Methodology under pressure",
+          "observable_zh": "事故中的结构化输出、升级与止损、沉淀可复用清单。"
+        }
+      ]
+    },
+    {
+      "id": "collaboration",
+      "title_zh": "沟通与协作能力",
+      "title_en": "Collaboration",
+      "spirit_zh": "软件是团队工程；主程以后沟通与协同权重上升。",
+      "level2": [
+        {
+          "id": "cross_functional",
+          "title_zh": "跨职能协同",
+          "title_en": "Cross-functional",
+          "observable_zh": "与策划/产品/运营/美术等的接口、纪要与对齐频率。"
+        },
+        {
+          "id": "requirements_docs",
+          "title_zh": "需求澄清与文档",
+          "title_en": "Requirements & docs",
+          "observable_zh": "边界案例、验收标准、设计/交接文档可读性。"
+        },
+        {
+          "id": "code_review_practice",
+          "title_zh": "Code Review 实践",
+          "title_en": "Code review",
+          "observable_zh": "评审参与度、评论质量、缺陷闭环。"
+        },
+        {
+          "id": "influence_mentoring",
+          "title_zh": "影响、带人与向上沟通",
+          "title_en": "Influence & mentoring",
+          "observable_zh": "辅导记录、风险与依赖上报、对齐管理层预期。"
+        }
+      ]
+    },
+    {
+      "id": "ownership",
+      "title_zh": "主动性与 Ownership",
+      "title_en": "Ownership",
+      "spirit_zh": "主动暴露风险、推动落地，对结果负责，而非只完成分配条目。",
+      "examples_zh": "从「需求没写」到「我已兜底/已同步风险」。",
+      "level2": [
+        {
+          "id": "proactive_risk",
+          "title_zh": "主动发现与暴露风险",
+          "title_en": "Proactive risk",
+          "observable_zh": "非分配范围内的改进、预警单、前置沟通。"
+        },
+        {
+          "id": "drive_closure",
+          "title_zh": "推动解决与闭环",
+          "title_en": "Drive to closure",
+          "observable_zh": "跨人推进、升级路径、可验证的完成定义。"
+        },
+        {
+          "id": "outcome_accountability",
+          "title_zh": "对结果负责",
+          "title_en": "Outcome accountability",
+          "observable_zh": "线上/里程碑结果、复盘中的承担与改进项。"
+        }
+      ]
+    },
+    {
+      "id": "growth",
+      "title_zh": "学习与成长能力",
+      "title_en": "Growth",
+      "spirit_zh": "技术迭代快；更看重学习速度、抽象与与 AI 协作的学习方式。",
+      "level2": [
+        {
+          "id": "learn_apply",
+          "title_zh": "学习与应用速度",
+          "title_en": "Learn & apply",
+          "observable_zh": "新技术落地周期、PoC、分享与内化。"
+        },
+        {
+          "id": "abstraction_meta",
+          "title_zh": "抽象与元能力",
+          "title_en": "Abstraction",
+          "observable_zh": "领域模型、可复用组件、跨项目迁移能力。"
+        },
+        {
+          "id": "continuity_passion",
+          "title_zh": "持续成长与投入",
+          "title_en": "Continuity",
+          "observable_zh": "复盘、培训、技术债偿还、职级目标对齐。"
+        },
+        {
+          "id": "ai_collaboration",
+          "title_zh": "AI 协作与风控",
+          "title_en": "AI collaboration",
+          "observable_zh": "提示与审查 AI 产出、流程嵌入与质量/合规边界。"
+        }
+      ]
+    }
+  ]
+}

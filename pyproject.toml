@@ -27,9 +27,21 @@ cursor-agent-memory = "cursor_agent_memory.cli:main"
 cursor-agent-memory-web = "cursor_agent_memory.webapp:main"
 cursor-agent-memory-sync = "cursor_agent_memory.sync_daemon:main"
 cursor-agent-memory-mcp = "cursor_agent_memory.mcp_server:main"
+org-contributor-emit-demo = "org_contributor_pipeline.emit_demo_artifact:main"
+org-contributor-gitlab-ingest = "org_contributor_pipeline.ingest.gitlab_commits:main"
+org-contributor-enrich-artifact = "org_contributor_pipeline.enrich_artifact:main"
+org-contributor-merge-evaluation-scope = "org_contributor_pipeline.merge_evaluation_scope:main"
+org-contributor-scope-audit = "org_contributor_pipeline.scope_audit:main"
+org-contributor-enrich-repo-catalog = "org_contributor_pipeline.enrich_repo_catalog:main"
+org-contributor-export-tech-fundamentals-facts = "org_contributor_pipeline.export_technical_fundamentals_facts:main"
+org-contributor-emit-evaluation-run = "org_contributor_pipeline.emit_evaluation_run:main"
+org-contributor-merge-evaluation-scores = "org_contributor_pipeline.merge_evaluation_scores:main"
+org-contributor-run-fill-evaluation-scores = "org_contributor_pipeline.run_fill_evaluation_scores:main"
+org-contributor-slice-evaluation-run-people = "org_contributor_pipeline.slice_evaluation_run_people:main"
+org-contributor-evaluation-run-to-markdown = "org_contributor_pipeline.evaluation_run_to_markdown:main"
 
 [tool.setuptools.packages.find]
-include = ["cursor_agent_memory*"]
+include = ["cursor_agent_memory*", "org_contributor_pipeline*"]
 
 [tool.setuptools.package-data]
 cursor_agent_memory = ["templates/*.html", "static/*.css"]

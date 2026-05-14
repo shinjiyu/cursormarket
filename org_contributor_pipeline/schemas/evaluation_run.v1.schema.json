@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/org_contributor_pipeline/evaluation_run.v1.schema.json",
+  "title": "evaluation_run.v1",
+  "type": "object",
+  "required": ["schema_version", "run", "workflow", "rubric", "people"],
+  "properties": {
+    "schema_version": { "const": "evaluation_run.v1" },
+    "run": { "type": "object" },
+    "workflow": { "type": "object" },
+    "rubric": { "type": "object" },
+    "people": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["person_key", "evidence_gate", "facts", "mandatory_l2_scores"],
+        "properties": {
+          "display_zh": { "type": "string" },
+          "person_key": { "type": "string" },
+          "evidence_gate": {
+            "type": "string",
+            "enum": ["insufficient", "partial", "sufficient"]
+          },
+          "facts": { "type": "object" },
+          "mandatory_l2_scores": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["l1_id", "l2_id"],
+              "properties": {
+                "l1_id": { "type": "string" },
+                "l2_id": { "type": "string" },
+                "grade": {
+                  "type": ["string", "null"],
+                  "description": "A|B|C|D|—|待评|null until filled"
+                },
+                "confidence": { "type": ["string", "null"] },
+                "narrative_zh": { "type": ["string", "null"] },
+                "filled_by": { "type": ["string", "null"] },
+                "filled_at": { "type": ["string", "null"] },
+                "inherited_from_run_id": { "type": ["string", "null"] }
+              }
+            }
+          }
+        }
+      }
+    },
+    "prior_evaluation_run_attachment": {
+      "type": "object",
+      "description": "Present when --baseline-json and --embed-baseline full|scores",
+      "properties": {
+        "embed_mode": { "type": "string", "enum": ["full", "scores"] },
+        "baseline_source_path": { "type": "string" },
+        "document": { "type": "object" }
+      }
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "artifact_version": 1,
+  "meta": {
+    "window_start": "2026-05-01T00:00:00+00:00",
+    "window_end": "2026-05-12T23:59:59+00:00",
+    "timezone": "UTC",
+    "gitlab_group": "demo/example",
+    "included_project_paths": [
+      "demo/client-game"
+    ],
+    "submodule_policy": "Commits in vendor/submodule paths discounted in downstream review; see plugin na_reason.",
+    "mailmap_version": "demo-mailmap-v0",
+    "fte_notes": {
+      "alice@example.com": "1.0 FTE core feature",
+      "bob@example.com": "0.5 FTE support + UI fixes"
+    }
+  },
+  "commit_events": [
+    {
+      "project_id": "1001",
+      "project_path": "demo/client-game",
+      "sha": "a1b2c3d4",
+      "committed_at": "2026-05-10T14:22:00+00:00",
+      "author_email": "alice@example.com",
+      "author_name": "Alice Dev",
+      "person_key": "alice@example.com",
+      "insertions": 120,
+      "deletions": 15,
+      "files_changed": 6,
+      "metadata": {
+        "branch": "main"
+      }
+    },
+    {
+      "project_id": "1001",
+      "project_path": "demo/client-game",
+      "sha": "e5f6c7d8",
+      "committed_at": "2026-05-11T09:01:00+00:00",
+      "author_email": "bob@example.com",
+      "author_name": "Bob Chen",
+      "person_key": "bob@example.com",
+      "insertions": 40,
+      "deletions": 200,
+      "files_changed": 22,
+      "metadata": {
+        "branch": "main",
+        "note": "includes vendor path touches"
+      }
+    }
+  ],
+  "plugin_results": [
+    {
+      "plugin_id": "path_touch_summary",
+      "plugin_version": "0.0.1",
+      "person_key": "alice@example.com",
+      "project_path": "demo/client-game",
+      "window_start": "2026-05-01T00:00:00+00:00",
+      "window_end": "2026-05-12T23:59:59+00:00",
+      "status": "ok",
+      "dimension_keys": [
+        "engineering.habits",
+        "architecture.modules"
+      ],
+      "metrics": [
+        {
+          "name": "game_ts_files_touched",
+          "value": 5,
+          "unit": "count",
+          "confidence": "medium"
+        },
+        {
+          "name": "largest_single_commit_insertions",
+          "value": 80,
+          "unit": "lines",
+          "confidence": "high"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "commit",
+          "sha": "a1b2c3d4",
+          "path_hint": "assets/scripts/game/ui/"
+        }
+      ],
+      "na_reason": null,
+      "error": null
+    },
+    {
+      "plugin_id": "path_touch_summary",
+      "plugin_version": "0.0.1",
+      "person_key": "bob@example.com",
+      "project_path": "demo/client-game",
+      "window_start": "2026-05-01T00:00:00+00:00",
+      "window_end": "2026-05-12T23:59:59+00:00",
+      "status": "ok",
+      "dimension_keys": [
+        "engineering.habits"
+      ],
+      "metrics": [
+        {
+          "name": "game_ts_files_touched",
+          "value": 2,
+          "unit": "count",
+          "confidence": "low"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "commit",
+          "sha": "e5f6c7d8",
+          "path_hint": "assets/scripts/game/"
+        }
+      ],
+      "na_reason": null,
+      "error": null
+    },
+    {
+      "plugin_id": "submodule_boundary_scan",
+      "plugin_version": "0.0.1",
+      "person_key": "bob@example.com",
+      "project_path": "demo/client-game",
+      "window_start": "2026-05-01T00:00:00+00:00",
+      "window_end": "2026-05-12T23:59:59+00:00",
+      "status": "skipped",
+      "dimension_keys": [
+        "architecture.framework"
+      ],
+      "metrics": [],
+      "evidence": [],
+      "na_reason": "No commits touching submodule paths in window; role marked as UI-only in meta.",
+      "error": null
+    }
+  ]
+}
