@@ -134,8 +134,8 @@
     "export": {
       "description": "将本地 Cursor 会话提取为对 Agent 友好的 JSON。",
       "help_output": "提取结果写入的目录。",
-      "help_cursor_user_root": "覆盖 Cursor 的 User 目录,默认 %%APPDATA%%\\Cursor\\User。",
-      "help_projects_root": "覆盖 .cursor 项目目录,默认 %%USERPROFILE%%\\.cursor\\projects。",
+      "help_cursor_user_root": "覆盖 Cursor User 目录,默认 Windows %%APPDATA%%\\Cursor\\User; macOS ~/Library/Application Support/Cursor/User; Linux ~/.config/Cursor/User。",
+      "help_projects_root": "覆盖 .cursor 项目目录,默认 ~/.cursor/projects。",
       "help_limit": "仅导出最近更新的 N 个会话。",
       "help_include_raw": "同时写出原始 transcript 与原始会话负载。",
       "help_compact": "输出紧凑 JSON,而不是格式化的文件。",

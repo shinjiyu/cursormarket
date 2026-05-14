@@ -134,8 +134,8 @@
     "export": {
       "description": "Extract local Cursor sessions into agent-friendly JSON.",
       "help_output": "Directory where extracted files will be written.",
-      "help_cursor_user_root": "Override the Cursor User directory. Defaults to %%APPDATA%%\\Cursor\\User.",
-      "help_projects_root": "Override the .cursor projects directory. Defaults to %%USERPROFILE%%\\.cursor\\projects.",
+      "help_cursor_user_root": "Override Cursor's User dir. Default: Windows %%APPDATA%%\\Cursor\\User; macOS ~/Library/Application Support/Cursor/User; Linux ~/.config/Cursor/User.",
+      "help_projects_root": "Override the .cursor projects directory. Defaults to ~/.cursor/projects.",
       "help_limit": "Only export the most recently updated N sessions.",
       "help_include_raw": "Also write raw transcript files and raw session payloads.",
       "help_compact": "Write compact JSON instead of pretty printed files.",

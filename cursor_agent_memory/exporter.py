@@ -5,6 +5,7 @@ import os
 import re
 import shutil
 import sqlite3
+import sys
 import tempfile
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
@@ -218,6 +219,25 @@ class SqliteSnapshot:
             self.tempdir.cleanup()
 
 
+def default_cursor_user_root() -> Path:
+    """Best-effort default location of Cursor's per-user state directory.
+
+    Windows: %APPDATA%\\Cursor\\User
+    macOS:   ~/Library/Application Support/Cursor/User
+    Linux:   ~/.config/Cursor/User
+    """
+    if sys.platform.startswith("win"):
+        appdata = os.environ.get("APPDATA")
+        if appdata:
+            return Path(appdata) / "Cursor" / "User"
+        return Path.home() / "AppData" / "Roaming" / "Cursor" / "User"
+    if sys.platform == "darwin":
+        return Path.home() / "Library" / "Application Support" / "Cursor" / "User"
+    xdg_config_home = os.environ.get("XDG_CONFIG_HOME")
+    config_root = Path(xdg_config_home) if xdg_config_home else Path.home() / ".config"
+    return config_root / "Cursor" / "User"
+
+
 class CursorMemoryExporter:
     def __init__(
         self,
@@ -228,11 +248,8 @@ class CursorMemoryExporter:
         include_raw: bool = False,
         pretty: bool = True,
     ) -> None:
-        appdata = os.environ.get("APPDATA")
         if cursor_user_root is None:
-            if not appdata:
-                raise RuntimeError("APPDATA is not set. Pass --cursor-user-root explicitly.")
-            cursor_user_root = Path(appdata) / "Cursor" / "User"
+            cursor_user_root = default_cursor_user_root()
 
         if projects_root is None:
             projects_root = Path.home() / ".cursor" / "projects"
