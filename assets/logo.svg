@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Cursor Agent Memory">
+  <rect width="128" height="128" rx="24" fill="#111827"/>
+  <rect x="28" y="34" width="72" height="14" rx="4" fill="#F9FAFB"/>
+  <rect x="28" y="56" width="56" height="14" rx="4" fill="#9CA3AF"/>
+  <rect x="28" y="78" width="64" height="14" rx="4" fill="#6B7280"/>
+  <circle cx="96" cy="88" r="18" fill="#22C55E"/>
+  <path d="M88 88h16M96 80v16" stroke="#052E16" stroke-width="4" stroke-linecap="round"/>
+</svg>

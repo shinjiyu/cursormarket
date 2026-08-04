@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "cursor-agent-memory-logs": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "cursor-agent-memory",
+        "cursor-agent-memory-mcp"
+      ]
+    }
+  }
+}

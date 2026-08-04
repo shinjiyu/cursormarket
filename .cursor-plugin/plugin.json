@@ -1,0 +1,27 @@
+{
+  "name": "cursor-agent-memory",
+  "displayName": "Cursor Agent Memory",
+  "version": "0.1.0",
+  "description": "Share local Cursor sessions across every Cursor window via a local-first stdio MCP. Exports workspace transcripts into one folder and exposes list/search/get tools — nothing leaves your machine.",
+  "author": {
+    "name": "shinjiyu",
+    "email": "yzy.zhenyu@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "cursor",
+    "mcp",
+    "memory",
+    "sessions",
+    "local-first",
+    "cross-workspace",
+    "productivity"
+  ],
+  "category": "developer-tools",
+  "tags": ["local-first", "mcp", "session-memory"],
+  "logo": "assets/logo.svg",
+  "homepage": "https://github.com/shinjiyu/cursormarket",
+  "repository": "https://github.com/shinjiyu/cursormarket",
+  "skills": "skills/",
+  "mcpServers": "mcp.json"
+}

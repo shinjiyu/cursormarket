@@ -72,9 +72,19 @@ A scheduled sync keeps the export folder fresh in the background. The MCP doesn'
 
 ---
 
+## Cursor Marketplace (recommended)
+
+After listing, install **Cursor Agent Memory** from **Customize → Marketplace**, then run a one-shot sync so the MCP has data:
+
+```bash
+uvx --from cursor-agent-memory cursor-agent-memory-sync --once
+```
+
+Manual / pre-Marketplace install is below. Plugin metadata lives in `.cursor-plugin/plugin.json` + root `mcp.json`.
+
 ## Install in 60 seconds (Windows / macOS / Linux)
 
-> Requires Python 3.10+ and a recent Cursor.
+> Requires Python 3.10+ and a recent Cursor. For one-click MCP without a global pip install, prefer `uvx` (see Marketplace section).
 
 ### Windows (PowerShell)
 
@@ -254,6 +264,16 @@ Cursor 单个窗口里的对话很好用，但跨工作区没法互通：今天�
 2. **stdio MCP 服务**：把这个目录暴露给本机任何一个 Cursor 窗口，提供 `list_sessions` / `search_sessions` / `get_session` 等几个直白的工具。
 
 加上一个后台定时同步，导出目录就一直是新鲜的。**全程本地，不联网。**
+
+### Cursor Marketplace（推荐）
+
+上架后可在 **Customize → Marketplace** 安装 **Cursor Agent Memory**，然后跑一次同步：
+
+```bash
+uvx --from cursor-agent-memory cursor-agent-memory-sync --once
+```
+
+插件清单：`.cursor-plugin/plugin.json` + 根目录 `mcp.json`。
 
 ### 60 秒安装
 
