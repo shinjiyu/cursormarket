@@ -13,11 +13,15 @@ from .exporter import safe_name
 from .paths import get_export_root
 
 mcp = FastMCP(
-    "cursor-agent-memory",
+    "cursor-agent-memory-logs",
     instructions=(
-        "Tools read local Cursor session exports from CURSOR_AGENT_MEMORY_EXPORT_DIR "
-        "(default ~/.cursor-agent-memory/export). Run cursor-agent-memory-sync to populate. "
-        "Use these tools for cross-workspace context: list sessions, search, read one session."
+        "Local-first cross-workspace Cursor session memory. "
+        "Reads exports from CURSOR_AGENT_MEMORY_EXPORT_DIR "
+        "(default ~/.cursor-agent-memory/export). "
+        "If tools report missing manifest/index, run: "
+        "uvx --from git+https://github.com/shinjiyu/cursormarket.git"
+        "#subdirectory=packaging/cursor-agent-memory cursor-agent-memory-sync --once. "
+        "Then list, search, or get sessions to recover prior chats from other workspaces."
     ),
 )
 

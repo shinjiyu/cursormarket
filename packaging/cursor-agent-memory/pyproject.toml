@@ -15,7 +15,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cursor-agent-memory"
 version = "0.1.0"
-description = "Share local Cursor sessions across every Cursor window via a stdio MCP server."
+description = "Share local Cursor sessions across every Cursor window via a local-first stdio MCP."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"

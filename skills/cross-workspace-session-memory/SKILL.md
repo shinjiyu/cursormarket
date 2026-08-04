@@ -1,10 +1,6 @@
 ---
 name: cross-workspace-session-memory
-description: >-
-  Use local Cursor Agent Memory MCP tools to find and read past sessions
-  across workspaces on this machine. Trigger when the user asks about a prior
-  Cursor chat, another project's debugging session, "what did we try last
-  week", or cross-workspace context that is not in the current transcript.
+description: Find and read past Cursor sessions across workspaces using the local Agent Memory MCP tools.
 ---
 
 # Cross-workspace session memory
