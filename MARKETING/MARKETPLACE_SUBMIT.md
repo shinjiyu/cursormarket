@@ -16,7 +16,7 @@ Fallback contact: kniparko@anysphere.com
 | Plugin name | Cursor Agent Memory |
 | Plugin slug / name | `cursor-agent-memory` |
 | Tagline | Share Cursor sessions across every Cursor window via a local MCP. |
-| Short description | Reads local Cursor sessions into a normalized JSON tree and exposes them to any Cursor window on the same machine via stdio MCP. Local-only; no cloud. |
+| Short description | Share local Cursor sessions across every Cursor window via a local-first stdio MCP. |
 | Categories / tags | productivity, developer-tools, local-first, mcp, memory |
 | Runtime | Python 3.10+ (launched with `uvx`) |
 | Homepage | https://github.com/shinjiyu/cursormarket |
