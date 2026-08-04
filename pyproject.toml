@@ -19,7 +19,7 @@ dependencies = [
   "python-multipart>=0.0.12",
   "itsdangerous>=2.2.0",
   "httpx>=0.28.0",
-  "mcp>=1.8.0"
+  "mcp>=1.8.0,<2"
 ]
 
 [project.scripts]
@@ -33,15 +33,25 @@ org-contributor-enrich-artifact = "org_contributor_pipeline.enrich_artifact:main
 org-contributor-merge-evaluation-scope = "org_contributor_pipeline.merge_evaluation_scope:main"
 org-contributor-scope-audit = "org_contributor_pipeline.scope_audit:main"
 org-contributor-enrich-repo-catalog = "org_contributor_pipeline.enrich_repo_catalog:main"
-org-contributor-export-tech-fundamentals-facts = "org_contributor_pipeline.export_technical_fundamentals_facts:main"
+org-contributor-emit-mandatory-rubric-table = "org_contributor_pipeline.emit_mandatory_rubric_table:main"
 org-contributor-emit-evaluation-run = "org_contributor_pipeline.emit_evaluation_run:main"
 org-contributor-merge-evaluation-scores = "org_contributor_pipeline.merge_evaluation_scores:main"
 org-contributor-run-fill-evaluation-scores = "org_contributor_pipeline.run_fill_evaluation_scores:main"
 org-contributor-slice-evaluation-run-people = "org_contributor_pipeline.slice_evaluation_run_people:main"
+org-contributor-slice-artifact-by-game-prefixes = "org_contributor_pipeline.slice_artifact_by_game_prefixes:main"
 org-contributor-evaluation-run-to-markdown = "org_contributor_pipeline.evaluation_run_to_markdown:main"
+org-contributor-eval-portal = "org_contributor_pipeline.eval_portal.app:main"
+org-contributor-snapshot-sync-repos = "org_contributor_pipeline.snapshot_module_eval.sync_repos:main"
+org-contributor-snapshot-module-scores = "org_contributor_pipeline.snapshot_module_eval.scan_modules:main"
+org-contributor-snapshot-blame-attribution = "org_contributor_pipeline.snapshot_module_eval.blame_attribution:main"
+org-contributor-snapshot-module-llm-review = "org_contributor_pipeline.snapshot_module_eval.run_module_llm_review:main"
+org-contributor-snapshot-person-l2-rollups = "org_contributor_pipeline.snapshot_module_eval.person_l2_rollups:main"
+org-contributor-snapshot-person-l2-scores = "org_contributor_pipeline.snapshot_module_eval.grade_person_l2_rollups:main"
+org-contributor-snapshot-person-report = "org_contributor_pipeline.snapshot_module_eval.build_snapshot_person_report:main"
 
 [tool.setuptools.packages.find]
 include = ["cursor_agent_memory*", "org_contributor_pipeline*"]
 
 [tool.setuptools.package-data]
 cursor_agent_memory = ["templates/*.html", "static/*.css", "locales/*.json"]
+org_contributor_pipeline = ["rubric/*.json", "rubric/*.md", "schemas/*.json", "prompts/*.md", "snapshot_module_eval/prompts/*.md", "eval_portal/static/*"]

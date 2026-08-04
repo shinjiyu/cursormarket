@@ -23,7 +23,7 @@ If tools return `manifest_not_found` / `session_index_not_found`:
 
 1. Ask the user (or run, if shell is allowed) a one-shot sync:
    ```bash
-   uvx --from cursor-agent-memory cursor-agent-memory-sync --once
+   uvx --from "git+https://github.com/shinjiyu/cursormarket.git#subdirectory=packaging/cursor-agent-memory" cursor-agent-memory-sync --once
    ```
 2. Retry the MCP tools.
 

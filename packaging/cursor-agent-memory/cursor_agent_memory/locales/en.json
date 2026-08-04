@@ -1,0 +1,156 @@
+{
+  "language": {
+    "name": "English",
+    "label": "Language"
+  },
+  "app": {
+    "title": "Cursor Agent Memory"
+  },
+  "nav": {
+    "brand": "Cursormarket Internal",
+    "catalog": "Catalog",
+    "upload": "Upload",
+    "my_downloads": "My Downloads",
+    "admin": "Admin",
+    "logout": "Logout"
+  },
+  "common": {
+    "all": "All",
+    "search": "Search",
+    "reset": "Reset",
+    "unknown": "Unknown",
+    "no_note": "No note provided.",
+    "system": "System"
+  },
+  "login": {
+    "title": "Internal raw bundle library",
+    "subtitle": "Upload, discover, preview, and download raw Cursor bundles. Deep analysis stays local.",
+    "feishu_title": "Feishu sign-in",
+    "feishu_use_sso": "Use Feishu SSO for normal internal access.",
+    "feishu_continue": "Continue with Feishu",
+    "feishu_not_configured": "Feishu is not configured in this local environment yet.",
+    "feishu_not_configured_pill": "Not configured",
+    "demo_title": "Demo access",
+    "demo_subtitle": "Development-only entry path. No passwords, just role-based demo sessions.",
+    "demo_continue_as": "Continue as {name}"
+  },
+  "catalog": {
+    "title": "Catalog",
+    "subtitle": "Search internal raw bundles and decide which ones are worth local analysis.",
+    "stat_visible_bundles": "Visible bundles",
+    "stat_projects": "Projects",
+    "stat_my_downloads": "My downloads",
+    "field_search": "Search",
+    "search_placeholder": "title, tags, note",
+    "field_project": "Project",
+    "field_problem_type": "Problem Type",
+    "field_sensitivity": "Sensitivity",
+    "no_project": "No project",
+    "unknown_uploader": "Unknown uploader",
+    "messages": "{count} messages",
+    "tool_events": "{count} tool events",
+    "transcript_events": "{count} transcript events",
+    "empty_title": "No bundles found",
+    "empty_subtitle": "Try broader filters or publish your first bundle."
+  },
+  "detail": {
+    "summary": "Bundle Summary",
+    "project": "Project: {value}",
+    "repo": "Repo: {value}",
+    "uploader": "Uploader: {value}",
+    "updated": "Updated: {value}",
+    "structure": "Structure",
+    "touched_files": "{count} touched files",
+    "download": "Download",
+    "version": "Version",
+    "download_button": "Download raw bundle",
+    "visibility": "Visibility: {value}",
+    "safe_preview": "Safe Preview",
+    "no_preview": "No safe preview available for this bundle.",
+    "plugin_history": "Plugin History",
+    "no_summary": "No summary",
+    "no_plugin_history": "No plugin history yet."
+  },
+  "upload": {
+    "title": "Upload raw bundle",
+    "subtitle": "Publish a raw bundle into the internal catalog with metadata and plugin checks.",
+    "publish": "Publish",
+    "field_bundle_file": "Bundle file",
+    "field_title": "Title",
+    "field_project": "Project",
+    "field_repo": "Repo",
+    "field_problem_type": "Problem Type",
+    "field_sensitivity": "Sensitivity",
+    "field_tags": "Tags",
+    "tags_placeholder": "comma,separated,tags",
+    "field_short_note": "Short note",
+    "submit": "Upload bundle",
+    "what_happens": "What happens",
+    "step_store": "Store raw file as immutable bundle version",
+    "step_extract": "Extract manifest and safe preview when possible",
+    "step_plugins": "Run before-upload plugins like sensitivity scan",
+    "step_publish": "Publish to catalog if checks pass",
+    "result_title": "Upload result",
+    "result_published": "Published {title} into the catalog.",
+    "plugin_results": "Plugin results",
+    "no_plugin_output": "No plugin output.",
+    "error_choose_file": "Please choose a bundle file.",
+    "error_plugin_rejected": "Upload rejected by plugin."
+  },
+  "downloads": {
+    "title": "My downloads",
+    "subtitle": "Track bundles you have already pulled into local analysis workflows.",
+    "version": "Version: {value}",
+    "file": "File: {value}",
+    "downloaded": "Downloaded: {value}",
+    "empty_title": "No downloads yet",
+    "empty_subtitle": "Download a bundle from the catalog to start building local analysis history."
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Configure auth, plugins, and audit visibility for the internal library.",
+    "auth_status": "Auth status",
+    "feishu": "Feishu",
+    "configured": "Configured",
+    "not_configured": "Not configured",
+    "feishu_note": "MVP uses Feishu in production and demo role sessions in local development.",
+    "plugins": "Plugins",
+    "disable": "Disable",
+    "enable": "Enable",
+    "recent_audit": "Recent audit trail",
+    "no_audit": "No audit events yet."
+  },
+  "error": {
+    "auth_required": "Authentication required.",
+    "insufficient_permissions": "Insufficient permissions.",
+    "bundle_not_found": "Bundle not found.",
+    "bundle_restricted": "Bundle is restricted.",
+    "download_not_allowed": "Not allowed to download this bundle.",
+    "download_grant_missing": "Download grant expired or missing.",
+    "download_rejected": "Download rejected."
+  },
+  "cli": {
+    "lang_help": "UI language for CLI messages (e.g. en, zh).",
+    "export": {
+      "description": "Extract local Cursor sessions into agent-friendly JSON.",
+      "help_output": "Directory where extracted files will be written.",
+      "help_cursor_user_root": "Override Cursor's User dir. Default: Windows %%APPDATA%%\\Cursor\\User; macOS ~/Library/Application Support/Cursor/User; Linux ~/.config/Cursor/User.",
+      "help_projects_root": "Override the .cursor projects directory. Defaults to ~/.cursor/projects.",
+      "help_limit": "Only export the most recently updated N sessions.",
+      "help_include_raw": "Also write raw transcript files and raw session payloads.",
+      "help_compact": "Write compact JSON instead of pretty printed files.",
+      "summary": "Exported {sessions} sessions, {workspaces} workspaces, and {transcripts} transcript files to {output}"
+    },
+    "sync": {
+      "description": "Periodically export Cursor local sessions to CURSOR_AGENT_MEMORY_EXPORT_DIR.",
+      "help_once": "Run a single export and exit (for Task Scheduler / cron).",
+      "help_interval": "Seconds between exports when not using --once. Default from env or 3600.",
+      "help_include_raw": "Also export raw composer payloads and transcript copies.",
+      "help_limit": "Only export the N most recently updated sessions.",
+      "summary_once": "Exported {sessions} sessions to {output}",
+      "loop_start": "cursor-agent-memory-sync: exporting every {interval}s to {output}",
+      "loop_iter": "[{ts}] {sessions} sessions -> {output}",
+      "loop_failed": "[{ts}] export failed: {error}"
+    }
+  }
+}

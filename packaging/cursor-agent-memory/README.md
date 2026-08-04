@@ -77,10 +77,10 @@ A scheduled sync keeps the export folder fresh in the background. The MCP doesn'
 After listing, install **Cursor Agent Memory** from **Customize → Marketplace**, then run a one-shot sync so the MCP has data:
 
 ```bash
-uvx --from "git+https://github.com/shinjiyu/cursormarket.git#subdirectory=packaging/cursor-agent-memory" cursor-agent-memory-sync --once
+uvx --from cursor-agent-memory cursor-agent-memory-sync --once
 ```
 
-No PyPI account required — Marketplace `mcp.json` installs the same way from GitHub. Plugin metadata lives in `.cursor-plugin/plugin.json` + root `mcp.json`.
+Manual / pre-Marketplace install is below. Plugin metadata lives in `.cursor-plugin/plugin.json` + root `mcp.json`.
 
 ## Install in 60 seconds (Windows / macOS / Linux)
 
@@ -270,10 +270,10 @@ Cursor 单个窗口里的对话很好用，但跨工作区没法互通：今天�
 上架后可在 **Customize → Marketplace** 安装 **Cursor Agent Memory**，然后跑一次同步：
 
 ```bash
-uvx --from "git+https://github.com/shinjiyu/cursormarket.git#subdirectory=packaging/cursor-agent-memory" cursor-agent-memory-sync --once
+uvx --from cursor-agent-memory cursor-agent-memory-sync --once
 ```
 
-无需 PyPI。插件清单：`.cursor-plugin/plugin.json` + 根目录 `mcp.json`。
+插件清单：`.cursor-plugin/plugin.json` + 根目录 `mcp.json`。
 
 ### 60 秒安装
 

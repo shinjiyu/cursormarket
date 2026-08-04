@@ -24,19 +24,19 @@ Fallback contact: kniparko@anysphere.com
 ## What reviewers should see
 
 1. `.cursor-plugin/plugin.json` — manifest
-2. `mcp.json` — `uvx --from cursor-agent-memory cursor-agent-memory-mcp`
+2. `mcp.json` — GitHub install (no PyPI): `uvx --from git+https://github.com/shinjiyu/cursormarket.git#subdirectory=packaging/cursor-agent-memory cursor-agent-memory-mcp`
 3. `skills/cross-workspace-session-memory/SKILL.md` — when/how to use tools
 4. `assets/logo.svg` — logo
 5. `README.md` — install + privacy
 6. `SECURITY.md` — local-only posture
-7. PyPI: https://pypi.org/project/cursor-agent-memory/
+7. Install source: GitHub subdirectory under `packaging/cursor-agent-memory` (PyPI optional later)
 
 ## Pre-submit checklist
 
-- [ ] PyPI package live (`uvx --from cursor-agent-memory cursor-agent-memory-mcp` starts)
+- [ ] `uvx --from git+https://github.com/shinjiyu/cursormarket.git#subdirectory=packaging/cursor-agent-memory cursor-agent-memory-mcp` starts
 - [ ] Plugin files committed and pushed to `main`
 - [ ] Local smoke: symlink repo to `~/.cursor/plugins/local/cursor-agent-memory`, Reload Window, MCP green
-- [ ] One-shot sync documented / works: `uvx --from cursor-agent-memory cursor-agent-memory-sync --once`
+- [ ] One-shot sync works: `uvx --from git+https://github.com/shinjiyu/cursormarket.git#subdirectory=packaging/cursor-agent-memory cursor-agent-memory-sync --once`
 - [ ] Optional screenshots under `marketing/screenshots/` (hero chat + tools panel)
 
 ## Do not submit in this plugin scope

@@ -1,8 +1,5 @@
-# Everything under here is staged into place by scripts/publish.* and is
-# intentionally not tracked in git.
-README.md
-LICENSE
-cursor_agent_memory/
+# Build/dist only — package source is committed so Marketplace users can
+# `uvx --from git+…#subdirectory=packaging/cursor-agent-memory` without PyPI.
 build/
 dist/
 *.egg-info/

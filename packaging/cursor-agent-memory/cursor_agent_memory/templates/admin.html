@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero compact">
+  <div>
+    <h1>{{ t("admin.title") }}</h1>
+    <p>{{ t("admin.subtitle") }}</p>
+  </div>
+</section>
+
+<section class="grid two">
+  <article class="card">
+    <h2>{{ t("admin.auth_status") }}</h2>
+    <div class="stack">
+      <div class="audit-row">
+        <strong>{{ t("admin.feishu") }}</strong>
+        <span>{% if auth_status.feishu_enabled %}{{ t("admin.configured") }}{% else %}{{ t("admin.not_configured") }}{% endif %}</span>
+      </div>
+      <p class="muted">{{ t("admin.feishu_note") }}</p>
+    </div>
+  </article>
+
+  <article class="card">
+    <h2>{{ t("admin.plugins") }}</h2>
+    <div class="stack">
+      {% for plugin in plugins %}
+      <form class="audit-row" method="post" action="/admin/plugins/{{ plugin.id }}/toggle">
+        <div>
+          <strong>{{ plugin.name }}</strong>
+          <div class="muted">{{ plugin.hook_name }} · {{ plugin.provider }}</div>
+        </div>
+        <button class="button" type="submit">
+          {% if plugin.enabled %}{{ t("admin.disable") }}{% else %}{{ t("admin.enable") }}{% endif %}
+        </button>
+      </form>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+<section class="card">
+  <h2>{{ t("admin.recent_audit") }}</h2>
+  <div class="stack">
+    {% for event in audit_events %}
+    <div class="audit-row">
+      <div>
+        <strong>{{ event.event_name }}</strong>
+        <div class="muted">{{ event.actor_name or event.actor_id or t("common.system") }}</div>
+      </div>
+      <div class="muted">{{ event.title or event.bundle_id or "-" }}</div>
+      <div class="muted">{{ event.created_at }}</div>
+    </div>
+    {% else %}
+    <p class="muted">{{ t("admin.no_audit") }}</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

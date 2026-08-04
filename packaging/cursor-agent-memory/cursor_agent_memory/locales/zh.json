@@ -1,0 +1,156 @@
+{
+  "language": {
+    "name": "中文",
+    "label": "语言"
+  },
+  "app": {
+    "title": "Cursor Agent Memory"
+  },
+  "nav": {
+    "brand": "Cursormarket 内部库",
+    "catalog": "目录",
+    "upload": "上传",
+    "my_downloads": "我的下载",
+    "admin": "管理",
+    "logout": "退出"
+  },
+  "common": {
+    "all": "全部",
+    "search": "搜索",
+    "reset": "重置",
+    "unknown": "未知",
+    "no_note": "暂无说明。",
+    "system": "系统"
+  },
+  "login": {
+    "title": "内部 Raw Bundle 库",
+    "subtitle": "上传、检索、预览并下载 Cursor 原始会话包，深度分析仍然在本地完成。",
+    "feishu_title": "飞书登录",
+    "feishu_use_sso": "推荐通过飞书 SSO 进行常规内网访问。",
+    "feishu_continue": "使用飞书登录",
+    "feishu_not_configured": "当前本地环境尚未配置飞书。",
+    "feishu_not_configured_pill": "未配置",
+    "demo_title": "演示账号",
+    "demo_subtitle": "仅用于开发环境的入口，无需密码,按角色直接登录。",
+    "demo_continue_as": "以 {name} 身份进入"
+  },
+  "catalog": {
+    "title": "目录",
+    "subtitle": "检索内部原始会话包,挑出值得本地深入分析的内容。",
+    "stat_visible_bundles": "可见 Bundle",
+    "stat_projects": "项目数",
+    "stat_my_downloads": "我的下载",
+    "field_search": "搜索",
+    "search_placeholder": "标题、标签、备注",
+    "field_project": "项目",
+    "field_problem_type": "问题类型",
+    "field_sensitivity": "敏感度",
+    "no_project": "无项目",
+    "unknown_uploader": "未知上传者",
+    "messages": "{count} 条消息",
+    "tool_events": "{count} 次工具事件",
+    "transcript_events": "{count} 条记录事件",
+    "empty_title": "未找到 Bundle",
+    "empty_subtitle": "尝试更宽的筛选条件,或先上传第一个 Bundle。"
+  },
+  "detail": {
+    "summary": "Bundle 概要",
+    "project": "项目: {value}",
+    "repo": "仓库: {value}",
+    "uploader": "上传者: {value}",
+    "updated": "更新时间: {value}",
+    "structure": "结构",
+    "touched_files": "{count} 个被改动的文件",
+    "download": "下载",
+    "version": "版本",
+    "download_button": "下载原始 Bundle",
+    "visibility": "可见范围: {value}",
+    "safe_preview": "安全预览",
+    "no_preview": "该 Bundle 暂无安全预览内容。",
+    "plugin_history": "插件历史",
+    "no_summary": "无摘要",
+    "no_plugin_history": "暂无插件运行记录。"
+  },
+  "upload": {
+    "title": "上传原始 Bundle",
+    "subtitle": "将原始 Bundle 发布到内部目录,附带元数据并经过插件检查。",
+    "publish": "发布",
+    "field_bundle_file": "Bundle 文件",
+    "field_title": "标题",
+    "field_project": "项目",
+    "field_repo": "仓库",
+    "field_problem_type": "问题类型",
+    "field_sensitivity": "敏感度",
+    "field_tags": "标签",
+    "tags_placeholder": "用逗号,分隔,多个标签",
+    "field_short_note": "简短说明",
+    "submit": "上传 Bundle",
+    "what_happens": "上传后会发生什么",
+    "step_store": "把原始文件作为不可变的 Bundle 版本入库",
+    "step_extract": "尽可能提取清单与安全预览",
+    "step_plugins": "运行 before-upload 插件,例如敏感内容扫描",
+    "step_publish": "全部检查通过后,发布到目录",
+    "result_title": "上传结果",
+    "result_published": "已将 {title} 发布到目录。",
+    "plugin_results": "插件结果",
+    "no_plugin_output": "插件无输出。",
+    "error_choose_file": "请选择一个 Bundle 文件。",
+    "error_plugin_rejected": "插件已拒绝该上传。"
+  },
+  "downloads": {
+    "title": "我的下载",
+    "subtitle": "记录已经下载到本地分析流程中的 Bundle。",
+    "version": "版本: {value}",
+    "file": "文件: {value}",
+    "downloaded": "下载时间: {value}",
+    "empty_title": "暂无下载",
+    "empty_subtitle": "在目录里下载一个 Bundle,开始建立你本地的分析历史。"
+  },
+  "admin": {
+    "title": "管理",
+    "subtitle": "为内部库配置认证、插件与审计可见性。",
+    "auth_status": "认证状态",
+    "feishu": "飞书",
+    "configured": "已配置",
+    "not_configured": "未配置",
+    "feishu_note": "MVP 在生产使用飞书,本地开发使用按角色的演示会话。",
+    "plugins": "插件",
+    "disable": "停用",
+    "enable": "启用",
+    "recent_audit": "最近审计记录",
+    "no_audit": "暂无审计事件。"
+  },
+  "error": {
+    "auth_required": "需要登录后访问。",
+    "insufficient_permissions": "权限不足。",
+    "bundle_not_found": "未找到该 Bundle。",
+    "bundle_restricted": "该 Bundle 受限,无法访问。",
+    "download_not_allowed": "无权下载该 Bundle。",
+    "download_grant_missing": "下载授权已过期或不存在。",
+    "download_rejected": "下载被拒绝。"
+  },
+  "cli": {
+    "lang_help": "CLI 输出语言 (例如 en、zh)。",
+    "export": {
+      "description": "将本地 Cursor 会话提取为对 Agent 友好的 JSON。",
+      "help_output": "提取结果写入的目录。",
+      "help_cursor_user_root": "覆盖 Cursor User 目录,默认 Windows %%APPDATA%%\\Cursor\\User; macOS ~/Library/Application Support/Cursor/User; Linux ~/.config/Cursor/User。",
+      "help_projects_root": "覆盖 .cursor 项目目录,默认 ~/.cursor/projects。",
+      "help_limit": "仅导出最近更新的 N 个会话。",
+      "help_include_raw": "同时写出原始 transcript 与原始会话负载。",
+      "help_compact": "输出紧凑 JSON,而不是格式化的文件。",
+      "summary": "已导出 {sessions} 个会话、{workspaces} 个工作区、{transcripts} 个 transcript 文件,目标 {output}"
+    },
+    "sync": {
+      "description": "周期性地把本地 Cursor 会话导出到 CURSOR_AGENT_MEMORY_EXPORT_DIR。",
+      "help_once": "只跑一次导出后退出 (用于 Task Scheduler / cron)。",
+      "help_interval": "非 --once 时,每次导出的间隔秒数,默认读环境变量或 3600。",
+      "help_include_raw": "同时导出原始 composer 负载和 transcript 副本。",
+      "help_limit": "仅导出最近更新的 N 个会话。",
+      "summary_once": "已导出 {sessions} 个会话到 {output}",
+      "loop_start": "cursor-agent-memory-sync: 每 {interval} 秒导出到 {output}",
+      "loop_iter": "[{ts}] {sessions} 个会话 -> {output}",
+      "loop_failed": "[{ts}] 导出失败: {error}"
+    }
+  }
+}

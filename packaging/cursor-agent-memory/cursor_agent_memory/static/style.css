@@ -1,0 +1,278 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b1020;
+  --panel: #11182c;
+  --panel-2: #16203a;
+  --text: #e8edf8;
+  --muted: #9fafc7;
+  --border: #26314d;
+  --accent: #79a8ff;
+  --accent-2: #4d79d8;
+  --danger: #d97777;
+  --warning: #d8b14d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Segoe UI, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(11, 16, 32, 0.95);
+  position: sticky;
+  top: 0;
+}
+
+.brand a {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.nav {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang-switch a.pill {
+  text-decoration: none;
+}
+
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  margin-bottom: 20px;
+}
+
+.hero.compact {
+  padding: 20px 24px;
+}
+
+.hero h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.hero p, p, li, span, label {
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.grid.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid.four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+}
+
+.card h2, .card h3 {
+  margin-top: 0;
+}
+
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.button.primary {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+}
+
+.filters label,
+form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #0f1730;
+  color: var(--text);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 120px;
+}
+
+.stat strong {
+  color: var(--text);
+  font-size: 24px;
+}
+
+.pill-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 12px;
+}
+
+.pill.soft {
+  color: var(--muted);
+}
+
+.pill.warning {
+  border-color: rgba(216, 177, 77, 0.45);
+}
+
+.meta-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin: 12px 0;
+}
+
+blockquote {
+  margin: 14px 0 0;
+  padding: 14px 16px;
+  border-left: 3px solid var(--accent);
+  background: rgba(121, 168, 255, 0.08);
+  border-radius: 10px;
+  color: var(--text);
+}
+
+.preview-snippet {
+  margin: 0;
+  padding: 12px 14px;
+  background: #0f1730;
+  border-radius: 10px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.alert.error {
+  background: rgba(217, 119, 119, 0.12);
+  border: 1px solid rgba(217, 119, 119, 0.45);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+
+.audit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(38, 49, 77, 0.7);
+}
+
+.audit-row:last-child {
+  border-bottom: 0;
+}
+
+.steps {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.empty {
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .grid.two,
+  .grid.four,
+  .hero {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .page {
+    padding: 16px;
+  }
+}

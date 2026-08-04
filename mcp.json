@@ -4,7 +4,7 @@
       "command": "uvx",
       "args": [
         "--from",
-        "cursor-agent-memory",
+        "git+https://github.com/shinjiyu/cursormarket.git#subdirectory=packaging/cursor-agent-memory",
         "cursor-agent-memory-mcp"
       ]
     }

@@ -1,18 +1,12 @@
-# Publishing-only pyproject for the `cursor-agent-memory` package.
+# Publishing tree for `cursor-agent-memory`.
 #
-# The repo root pyproject.toml is the *monorepo dev* config and intentionally
-# bundles the internal `org_contributor_pipeline`. This one ships ONLY the
-# cursor_agent_memory package to PyPI.
+# This directory is the installable unit for Marketplace / uvx (no PyPI needed):
 #
-# Don't run `python -m build` here directly — the package source and README
-# live at the repo root, not next to this file. Use the publish script:
+#   uvx --from git+https://github.com/shinjiyu/cursormarket.git#subdirectory=packaging/cursor-agent-memory cursor-agent-memory-mcp
 #
-#   scripts/publish.ps1   # Windows
-#   scripts/publish.sh    # macOS / Linux
-#
-# It copies cursor_agent_memory/ and README.md next to this pyproject into a
-# disposable staging dir, runs `python -m build`, and leaves the artifacts in
-# `packaging/cursor-agent-memory/dist/`.
+# Keep `cursor_agent_memory/`, README.md, and LICENSE in sync with the repo root
+# via `scripts/publish.ps1` / `scripts/publish.sh` before tagging a release.
+# Optional: `-Upload pypi` when a PyPI token is available.
 
 [build-system]
 requires = ["setuptools>=69", "wheel"]
@@ -50,7 +44,7 @@ dependencies = [
   "python-multipart>=0.0.12",
   "itsdangerous>=2.2.0",
   "httpx>=0.28.0",
-  "mcp>=1.8.0",
+  "mcp>=1.8.0,<2",
 ]
 
 [project.urls]
